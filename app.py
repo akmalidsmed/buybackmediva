@@ -576,7 +576,7 @@ with col1:
 with col2:
     st.markdown(f'<div class="metric-card metric-blue"><h3>{total_qty}</h3><p>Total Qty</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown(f'<div class="metric-card metric-green"><h3>{total_qty_buyback}</h3><p>Sudah Buyback</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-green"><h3>{total_qty_buyback}</h3><p>Buyback Qty</p></div>', unsafe_allow_html=True)
 with col4:
     st.markdown(f'<div class="metric-card metric-purple"><h3>{total_sisa_qty}</h3><p>Sisa Qty</p></div>', unsafe_allow_html=True)
 
