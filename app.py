@@ -671,5 +671,3 @@ st.markdown("""
         <p style="font-size: 0.8em; color: #888;">Managed by Akmaludin Agustian for Heru Utomo | Location: Logos</p>
     </div>
 """, unsafe_allow_html=True)
-</content>
-</create_file>
