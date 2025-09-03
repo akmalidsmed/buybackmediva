@@ -18,7 +18,7 @@ st.markdown("""
             font-family: 'Arial', sans-serif;
             margin-bottom: 20px;
         }
-        
+
         /* Metric Cards */
         .metric-card {
             background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
@@ -33,11 +33,12 @@ st.markdown("""
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        
+
         .metric-red { background: linear-gradient(45deg, #ff6b6b, #ff9e7d); color: white; }
         .metric-green { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
         .metric-blue { background: linear-gradient(45deg, #54a0ff, #2e86de); color: white; }
-        
+        .metric-purple { background: linear-gradient(45deg, #667eea, #764ba2); color: white; }
+
         /* Sidebar Styling */
         .sidebar-content {
             background: linear-gradient(180deg, #f8f9ff 0%, #e6f3ff 100%);
@@ -45,14 +46,14 @@ st.markdown("""
             border-radius: 15px;
             margin: 10px;
         }
-        
+
         /* Table Styling */
         .table-header {
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
             color: white !important;
             font-weight: bold !important;
         }
-        
+
         /* Button Styling */
         .btn-gradient {
             background: linear-gradient(45deg, #667eea, #764ba2);
@@ -69,7 +70,7 @@ st.markdown("""
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        
+
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -85,7 +86,7 @@ st.markdown("""
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #54a0ff, #2e86de);
         }
-        
+
         /* Main Content */
         .main-content {
             background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(248,250,251,0.9));
@@ -93,11 +94,41 @@ st.markdown("""
             padding: 20px;
             margin: 10px;
         }
-        
+
         /* Glow effect for metrics */
         .metric-card:nth-child(1) { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
         .metric-card:nth-child(2) { box-shadow: 0 0 20px rgba(78, 205, 196, 0.3); }
         .metric-card:nth-child(3) { box-shadow: 0 0 20px rgba(84, 160, 255, 0.3); }
+        .metric-card:nth-child(4) { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+
+        /* Filters Section */
+        .filters-section {
+            background: linear-gradient(45deg, #f0f9ff, #e0f2fe);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        /* Error message */
+        .error-msg {
+            background: linear-gradient(45deg, #fee2e2, #fecaca);
+            border: 1px solid #f87171;
+            color: #b91c1c;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        /* Success message */
+        .success-msg {
+            background: linear-gradient(45deg, #d1fae5, #a7f3d0);
+            border: 1px solid #34d399;
+            color: #047857;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -303,7 +334,7 @@ INITIAL_DATA = [
     },
     {
         "NO": 29,
-    "PRINCIPAL": "NEWPONG",
+        "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "100-7026-061",
         "DESCRIPTION": "ASSY, LUX LOTION KIT, SINGLE",
         "QTY": 3
@@ -431,9 +462,16 @@ def load_data() -> pd.DataFrame:
         df["Tanggal_Buyback"] = pd.NaT
     if "Catatan" not in df.columns:
         df["Catatan"] = ""
+    if "Qty_Buyback" not in df.columns:
+        df["Qty_Buyback"] = 0  # default 0
     df["Tanggal_Buyback"] = pd.to_datetime(df["Tanggal_Buyback"], errors="coerce").dt.date
     df = df.reset_index(drop=True)
     df.insert(0, "_ROW_ID", range(1, len(df)+1))
+
+    # Calculate Sisa Qty
+    df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
+    df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0  # jangan negatif
+
     return df
 
 def filtered_df(df: pd.DataFrame, status_opt: str, search: str) -> pd.DataFrame:
@@ -465,16 +503,20 @@ st.markdown('<div class="gradient-bg"><h1 style="font-size: 2.5em; margin-bottom
 total = len(df)
 sudah = int((df["Status"] == "Sudah").sum())
 belum = total - sudah
+total_qty_buyback = df["Qty_Buyback"].sum()
+total_sisa_qty = df["Sisa_Qty"].sum()
 
 st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown(f'<div class="metric-card metric-red"><h3 style="font-size: 2em; margin-bottom: 5px;">{total}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
 with col2:
     st.markdown(f'<div class="metric-card metric-green"><h3 style="font-size: 2em; margin-bottom: 5px;">{sudah}</h3><p>Sudah Buyback</p></div>', unsafe_allow_html=True)
 with col3:
     st.markdown(f'<div class="metric-card metric-blue"><h3 style="font-size: 2em; margin-bottom: 5px;">{belum}</h3><p>Belum Buyback</p></div>', unsafe_allow_html=True)
+with col4:
+    st.markdown(f'<div class="metric-card metric-purple"><h3 style="font-size: 2em; margin-bottom: 5px;">{total_sisa_qty}</h3><p>Total Sisa Qty</p></div>', unsafe_allow_html=True)
 
 st.divider()
 
@@ -485,15 +527,33 @@ with st.sidebar:
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
     st.caption("Pencarian diterapkan ke semua kolom teks.")
     st.markdown("---")
-    st.write("Kolom yang bisa diedit: **Status**, **Tanggal_Buyback**, **Catatan**.")
+    st.write("**Kolom yang bisa diedit:** Status, Tanggal Buyback, Catatan, Qty Buyback")
+    st.write("**Kolom otomatis:** Sisa Qty (QTY - Qty Buyback)")
     st.markdown("---")
     st.caption("Tip: Klik header kolom untuk sort / filter tambahan.")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ---------- Table (Editable) ----------
+# ---------- Filters Section ----------
+st.markdown('<div class="filters-section">', unsafe_allow_html=True)
+st.markdown("### 🔍 Filter Data")
+col_a, col_b = st.columns(2)
+with col_a:
+    show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
+with col_b:
+    show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------- Apply Filters ----------
 view = filtered_df(df, status_opt, search)
 
-editable_cols = [c for c in ["Status", "Tanggal_Buyback", "Catatan"] if c in view.columns]
+if show_complete:
+    view = view[view["Sisa_Qty"] > 0]
+elif show_zero_sisa:
+    view = view[view["Sisa_Qty"] == 0]
+
+# ---------- Editable Columns Configuration ----------
+editable_cols = [c for c in ["Status", "Tanggal_Buyback", "Catatan", "Qty_Buyback"] if c in view.columns]
 disabled_cols = [c for c in view.columns if c not in editable_cols]
 
 cfg = {}
@@ -503,12 +563,32 @@ if "Status" in view.columns:
     )
 if "Tanggal_Buyback" in view.columns:
     cfg["Tanggal_Buyback"] = st.column_config.DateColumn(
-        "Tanggal Buyback", format="YYYY-MM-DD", 
+        "Tanggal Buyback", format="YYYY-MM-DD",
         default=None
     )
 if "Catatan" in view.columns:
     cfg["Catatan"] = st.column_config.TextColumn("Catatan")
+if "Qty_Buyback" in view.columns:
+    cfg["Qty_Buyback"] = st.column_config.NumberColumn(
+        "Qty Buyback",
+        min_value=0,
+        max_value=None,
+        step=1,
+        help="Jumlah unit yang sudah dibuyback, maksimal sama dengan QTY"
+    )
+if "NO" in view.columns:
+    cfg["NO"] = st.column_config.NumberColumn("NO", disabled=True)
+if "QTY" in view.columns:
+    cfg["QTY"] = st.column_config.NumberColumn("QTY", disabled=True)
+if "Sisa_Qty" in view.columns:
+    cfg["Sisa_Qty"] = st.column_config.NumberColumn(
+        "Sisa Qty",
+        disabled=True,
+        help="Sisa unit yang belum dibuyback (otomatis dihitung)"
+    )
 
+# ---------- Table (Editable) ----------
+st.markdown("### 📊 Data Buyback")
 edited = st.data_editor(
     view,
     use_container_width=True,
@@ -519,17 +599,49 @@ edited = st.data_editor(
     key="editor",
 )
 
+# ---------- Validation and Update ----------
+validation_passed = True
+error_messages = []
+
+# Check for invalid Qty Buyback
+invalid_rows = edited[edited["Qty_Buyback"] > edited["QTY"]]
+if not invalid_rows.empty:
+    validation_passed = False
+    error_messages.append("Qty Buyback tidak boleh lebih besar dari Qty total!")
+
+# Calculate Sisa Qty
+if validation_passed:
+    edited["Sisa_Qty"] = edited["QTY"] - edited["Qty_Buyback"]
+    edited.loc[edited["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
+else:
+    st.markdown('<div class="error-msg">⚠️ ' + " ".join(error_messages) + '</div>', unsafe_allow_html=True)
+
+# ---------- Apply Changes to Main DataFrame ----------
+if validation_passed:
+    if not edited.equals(view):
+        base = df.set_index("_ROW_ID")
+        upd = edited.set_index("_ROW_ID")
+        base.update(upd[editable_cols])
+        df = base.reset_index()
+
+        # Recalculate Sisa Qty for main df
+        df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
+        df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
+
+        # Show success message
+        st.markdown('<div class="success-msg">✅ Data berhasil diperbarui!</div>', unsafe_allow_html=True)
+
+# ---------- Update Statistics ----------
+total = len(df)
+sudah = int((df["Status"] == "Sudah").sum())
+belum = total - sudah
+total_qty_buyback = df["Qty_Buyback"].sum()
+total_sisa_qty = df["Sisa_Qty"].sum()
+
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ---------- Apply edits ----------
-if not edited.equals(view):
-    base = df.set_index("_ROW_ID")
-    upd = edited.set_index("_ROW_ID")
-    base.update(upd[editable_cols])
-    df = base.reset_index()
-
 # ---------- Actions ----------
-st.markdown("### Download Data")
+st.markdown("### 💾 Download Data")
 bytes_xlsx = write_excel_to_bytes(df)
 st.download_button(
     "⬇️ Download Excel yang sudah diupdate",
@@ -540,10 +652,24 @@ st.download_button(
 )
 st.caption("Gunakan tombol download untuk menyimpan perubahan permanen.")
 
+# ---------- Additional Info ----------
+st.markdown("---")
+with st.expander("ℹ️ Panduan Penggunaan"):
+    st.write("""
+    - **Qty Buyback**: Masukkan jumlah unit yang sudah dibuyback (misal: 2 dari 38 unit)
+    - **Sisa Qty**: Otomatis dihitung = Qty - Qty Buyback
+    - **Status**: Ubah menjadi "Sudah" jika buyback sudah selesai 100%
+    - **Tanggal Buyback**: Tanggal terakhir buyback dilakukan
+    - **Catatan**: Catatan tambahan tentang buyback atau kondisi item
+    """)
+
 # ---------- Footer ----------
 st.markdown("""
     <div style="text-align: center; margin-top: 30px;">
         <p style="color: #666;">© 2025 IDSMED - Mediva Buyback Tracking System</p>
-        <p>Built with ❤️ & 🎨 for colorful tracking experience</p>
+        <p>Created by Akmaludin Agustian for Heru Utomo</p>
+        <p style="font-size: 0.8em; color: #888;">Managed by Akmaludin Agustian for Heru Utomo | Location: Logos</p>
     </div>
 """, unsafe_allow_html=True)
+</content>
+</create_file>
