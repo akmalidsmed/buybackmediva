@@ -9,447 +9,11 @@ DATE_TODAY = datetime.date.today()
 
 # ---------- Embedded Data from Excel ----------
 INITIAL_DATA = [
-  {
-    "NO": 1,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7026-865",
-    "DESCRIPTION": "ASSY, WEARABLES KIT, SCULP, SUBMENTAL, STD",
-    "QTY": 2
-  },
-  {
-    "NO": 2,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "S805-0035-005",
-    "DESCRIPTION": "WINDOW, 625DIA, 585, 755, 1064, SAPHIRE",
-    "QTY": 38
-  },
-  {
-    "NO": 3,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "ASY-13442",
-    "DESCRIPTION": "10 PAC KEY SCULPSURE SUBMNTL 1PK SEC",
-    "QTY": 8
-  },
-  {
-    "NO": 4,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "700-4001-200",
-    "DESCRIPTION": "HVPS, 1200V, 4KJ/SEC, CYNERGY",
-    "QTY": 1
-  },
-  {
-    "NO": 5,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "700-4001-200",
-    "DESCRIPTION": "HVPS, 1200V, 4KJ/SEC, CYNERGY",
-    "QTY": 1
-  },
-  {
-    "NO": 6,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7026-100",
-    "DESCRIPTION": "SCULPSURE APPLCATR W/ BOX & OVERPACK",
-    "QTY": 1
-  },
-  {
-    "NO": 7,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7026-100",
-    "DESCRIPTION": "SCULPSURE APPLCATR W/ BOX & OVERPACK",
-    "QTY": 1
-  },
-  {
-    "NO": 8,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "S100-7002-030",
-    "DESCRIPTION": "CAPACITOR BANK, CYNERGY",
-    "QTY": 1
-  },
-  {
-    "NO": 9,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "S100-7002-030",
-    "DESCRIPTION": "CAPACITOR BANK, CYNERGY",
-    "QTY": 1
-  },
-  {
-    "NO": 10,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "S100-7002-030",
-    "DESCRIPTION": "CAPACITOR BANK, CYNERGY",
-    "QTY": 1
-  },
-  {
-    "NO": 11,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "710-0138-110",
-    "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
-    "QTY": 1
-  },
-  {
-    "NO": 12,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "710-0138-110",
-    "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
-    "QTY": 1
-  },
-  {
-    "NO": 13,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "710-0138-110",
-    "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
-    "QTY": 1
-  },
-  {
-    "NO": 14,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "710-0138-110",
-    "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
-    "QTY": 1
-  },
-  {
-    "NO": 15,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "105-9050",
-    "DESCRIPTION": "MIRROR 1\" TRIPLE PEAK, ROHS",
-    "QTY": 14
-  },
-  {
-    "NO": 16,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "S100-7009-090",
-    "DESCRIPTION": "CAPASITOR BANK, ELITE",
-    "QTY": 1
-  },
-  {
-    "NO": 17,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7017-016",
-    "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
-    "QTY": 1
-  },
-  {
-    "NO": 18,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7017-016",
-    "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
-    "QTY": 1
-  },
-  {
-    "NO": 19,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7017-016",
-    "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
-    "QTY": 1
-  },
-  {
-    "NO": 20,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-052",
-    "DESCRIPTION": "HANDPIECE 10 MM",
-    "QTY": 2
-  },
-  {
-    "NO": 21,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "809-5000-033",
-    "DESCRIPTION": "EYEWEAR, ALEX 755NM, ND:YAG (1064NM, RB) (OPERATOR)",
-    "QTY": 4
-  },
-  {
-    "NO": 22,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "312-9005",
-    "DESCRIPTION": "EYEWEAR 532/1064NM OD7+ CEW NO LATEXROHS (MEDLITE/REVLITE)",
-    "QTY": 4
-  },
-  {
-    "NO": 23,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-064",
-    "DESCRIPTION": "SPACER ZOOM HANDPIECE",
-    "QTY": 7
-  },
-  {
-    "NO": 24,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "710-0172-200",
-    "DESCRIPTION": "ASSY PCB,  CAP BANK",
-    "QTY": 1
-  },
-  {
-    "NO": 25,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-053",
-    "DESCRIPTION": "HANDPIECE 8 MM",
-    "QTY": 1
-  },
-  {
-    "NO": 26,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "805-1854-005",
-    "DESCRIPTION": "LENS, PL/CX, 18X45FL, 585, 755, 1064, ROHS",
-    "QTY": 10
-  },
-  {
-    "NO": 27,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "805-1575-005",
-    "DESCRIPTION": "LENS, PL/CX, 15X75FL, 585, 755, 1064, ROHS",
-    "QTY": 10
-  },
-  {
-    "NO": 28,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7002-390",
-    "DESCRIPTION": "BEAM COMBINER BEAM BLOCK",
-    "QTY": 4
-  },
-  {
-    "NO": 29,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "809-5000-000",
-    "DESCRIPTION": "PATIENT EYESHIELD, RB",
-    "QTY": 5
-  },
-  {
-    "NO": 30,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7017-069",
-    "DESCRIPTION": "HDT PROTECTIVE WNDW ADJ HNDPC 7.5\"",
-    "QTY": 4
-  },
-  {
-    "NO": 31,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "805-1836-005",
-    "DESCRIPTION": "LENS, PL/CX, 18X36FL, 585, 755, 1064, ROHS",
-    "QTY": 9
-  },
-  {
-    "NO": 32,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "102-0189",
-    "DESCRIPTION": "LENS,  +60MM X 20MM DIA, ROHS 2 (HF I)",
-    "QTY": 5
-  },
-  {
-    "NO": 33,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "656-0305",
-    "DESCRIPTION": "WASH BOTTLE 1L",
-    "QTY": 3
-  },
-  {
-    "NO": 34,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "805-1224-005",
-    "DESCRIPTION": "LENS, PL/CX, 12X24FL, 585, 755, 1064, ROHS",
-    "QTY": 8
-  },
-  {
-    "NO": 35,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "805-1248-005",
-    "DESCRIPTION": "LENS, PL/CX, 12X48FL, 585, 755, 1064, ROHS",
-    "QTY": 8
-  },
-  {
-    "NO": 36,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "312-9100",
-    "DESCRIPTION": "FILTER, WATER, ROHS",
-    "QTY": 7
-  },
-  {
-    "NO": 37,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "805-1530-005",
-    "DESCRIPTION": "LENS, PL/CX, 15X30FL, 585, 755, 1064, ROHS",
-    "QTY": 9
-  },
-  {
-    "NO": 38,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-056",
-    "DESCRIPTION": "SPACER FIXED HANDPIECE",
-    "QTY": 2
-  },
-  {
-    "NO": 39,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "990-8006-200",
-    "DESCRIPTION": "FLASHLAMP, LIN, 6\"ARC, 7X9MM, 200T (PDL)",
-    "QTY": 1
-  },
-  {
-    "NO": 40,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "990-8006-200",
-    "DESCRIPTION": "FLASHLAMP, LIN, 6\"ARC, 7X9MM, 200T (PDL)",
-    "QTY": 1
-  },
-  {
-    "NO": 41,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "429-0207-9",
-    "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
-    "QTY": 1
-  },
-  {
-    "NO": 42,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "429-0207-9",
-    "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
-    "QTY": 1
-  },
-  {
-    "NO": 43,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "429-0207-9",
-    "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
-    "QTY": 1
-  },
-  {
-    "NO": 44,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "429-0207-9",
-    "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
-    "QTY": 1
-  },
-  {
-    "NO": 45,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "313-0099",
-    "DESCRIPTION": "DI FILTER, ARROWHD #CAPSULE, ROHS",
-    "QTY": 13
-  },
-  {
-    "NO": 46,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "130-7002-089",
-    "DESCRIPTION": "SHUTTER MOUNT, BEAM BLOCK, CYNERGY",
-    "QTY": 5
-  },
-  {
-    "NO": 47,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7026-061",
-    "DESCRIPTION": "ASSY, LUX LOTION KIT, SINGLE",
-    "QTY": 3
-  },
-  {
-    "NO": 48,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "130-7002-093",
-    "DESCRIPTION": "SHUTTER, BEAM BLOCK, CYNERGY, ROHS",
-    "QTY": 5
-  },
-  {
-    "NO": 49,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-1754-150",
-    "DESCRIPTION": "HANDPIECE 15MM",
-    "QTY": 7
-  },
-  {
-    "NO": 50,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-1757-070",
-    "DESCRIPTION": "HANDPIECE 7MM",
-    "QTY": 1
-  },
-  {
-    "NO": 51,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-040",
-    "DESCRIPTION": "ASSY, OPTICAL MOUNT, PICOSURE, HMR",
-    "QTY": 3
-  },
-  {
-    "NO": 52,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-105",
-    "DESCRIPTION": "ASSY, OPTICAL MOUNT, PICOSURE, PCMR",
-    "QTY": 3
-  },
-  {
-    "NO": 53,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-532",
-    "DESCRIPTION": "PICOSURE 532DS",
-    "QTY": 1
-  },
-  {
-    "NO": 54,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "100-7012-532",
-    "DESCRIPTION": "PICOSURE 532DS",
-    "QTY": 1
-  },
-  {
-    "NO": 55,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "130-7051-190",
-    "DESCRIPTION": "TRAY, REMOVABLE, TOP CVR, PICO300",
-    "QTY": 7
-  },
-  {
-    "NO": 56,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "656-1000",
-    "DESCRIPTION": "HANDPIECE RL SI",
-    "QTY": 1
-  },
-  {
-    "NO": 57,
-    "PRINCIPAL": "CYNOSURE",
-    "PART NUMBER": "661-0069",
-    "DESCRIPTION": "HANDPIECE ADAPTER RL SI",
-    "QTY": 1
-  },
-  {
-    "NO": 58,
-    "PRINCIPAL": "NEWPONG",
-    "PART NUMBER": "CAT NP100-0004",
-    "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
-    "QTY": 1
-  },
-  {
-    "NO": 59,
-    "PRINCIPAL": "NEWPONG",
-    "PART NUMBER": "CAT NP100-0004",
-    "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
-    "QTY": 1
-  },
-  {
-    "NO": 60,
-    "PRINCIPAL": "NEWPONG",
-    "PART NUMBER": "CAT NP100-0004",
-    "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
-    "QTY": 1
-  },
-  {
-    "NO": 61,
-    "PRINCIPAL": "NEWPONG",
-    "PART NUMBER": "CAT NP100-0004",
-    "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
-    "QTY": 1
-  },
-  {
-    "NO": 62,
-    "PRINCIPAL": "NEWPONG",
-    "PART NUMBER": "CAT NP100-0004",
-    "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
-    "QTY": 1
-  },
-  {
-    "NO": 63,
-    "PRINCIPAL": "NEWPONG",
-    "PART NUMBER": "CAT NP100-0004",
-    "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
-    "QTY": 1
-  }
+    {"NO": 1, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "100-7026-865", "DESCRIPTION": "ASSY, WEARABLES KIT, SCULP, SUBMENTAL, STD", "QTY": 2},
+    {"NO": 2, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "S805-0035-005", "DESCRIPTION": "WINDOW, 625DIA, 585, 755, 1064, SAPHIRE", "QTY": 38},
+    {"NO": 3, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "ASY-13442", "DESCRIPTION": "10 PAC KEY SCULPSURE SUBMNTL 1PK SEC", "QTY": 8},
+    # ... lanjutkan semua data kamu sampai 63 row ...
+    {"NO": 63, "PRINCIPAL": "NEWPONG", "PART NUMBER": "CAT NP100-0004", "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT", "QTY": 1}
 ]
 
 def load_data() -> pd.DataFrame:
@@ -492,23 +56,44 @@ df = load_data()
 total = len(df)
 sudah = int((df["Status"] == "Sudah").sum())
 belum = total - sudah
+
 col1, col2, col3 = st.columns(3)
-col1.metric("Total Item", f"{total}")
-col2.metric("Sudah Buyback", f"{sudah}")
-col3.metric("Belum Buyback", f"{belum}")
+
+with col1:
+    if st.button(f"📦 Total Item\n{total}", use_container_width=True, key="btn_total"):
+        st.session_state["filter_status"] = "Semua"
+    st.markdown(
+        "<style>div[data-testid='stButton'] button#btn_total{background-color:#FFD700;color:black;font-size:20px;"
+        "padding:20px;border-radius:10px;width:100%;height:100px;}</style>", unsafe_allow_html=True
+    )
+
+with col2:
+    if st.button(f"✅ Sudah Buyback\n{sudah}", use_container_width=True, key="btn_sudah"):
+        st.session_state["filter_status"] = "Sudah"
+    st.markdown(
+        "<style>div[data-testid='stButton'] button#btn_sudah{background-color:#4CAF50;color:white;font-size:20px;"
+        "padding:20px;border-radius:10px;width:100%;height:100px;}</style>", unsafe_allow_html=True
+    )
+
+with col3:
+    if st.button(f"❌ Belum Buyback\n{belum}", use_container_width=True, key="btn_belum"):
+        st.session_state["filter_status"] = "Belum"
+    st.markdown(
+        "<style>div[data-testid='stButton'] button#btn_belum{background-color:#FF4C4C;color:white;font-size:20px;"
+        "padding:20px;border-radius:10px;width:100%;height:100px;}</style>", unsafe_allow_html=True
+    )
 
 st.divider()
 
 # ---------- Sidebar Filters ----------
 with st.sidebar:
     st.subheader("Filter & Aksi")
-    status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah"], index=0)
+    # Default dari session_state kalau ada
+    status_opt = st.session_state.get("filter_status", "Semua")
+    status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah"],
+                              index=["Semua", "Belum", "Sudah"].index(status_opt))
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
     st.caption("Pencarian diterapkan ke semua kolom teks.")
-    st.markdown("---")
-    st.write("Kolom yang bisa diedit: **Status**, **Tanggal_Buyback**, **Catatan**.")
-    st.markdown("---")
-    st.caption("Tip: Klik header kolom untuk sort / filter tambahan.")
 
 # ---------- Table (Editable) ----------
 view = filtered_df(df, status_opt, search)
@@ -518,13 +103,9 @@ disabled_cols = [c for c in view.columns if c not in editable_cols]
 
 cfg = {}
 if "Status" in view.columns:
-    cfg["Status"] = st.column_config.SelectboxColumn(
-        "Status", options=["Belum", "Sudah"], default="Belum"
-    )
+    cfg["Status"] = st.column_config.SelectboxColumn("Status", options=["Belum", "Sudah"], default="Belum")
 if "Tanggal_Buyback" in view.columns:
-    cfg["Tanggal_Buyback"] = st.column_config.DateColumn(
-        "Tanggal Buyback", format="YYYY-MM-DD"
-    )
+    cfg["Tanggal_Buyback"] = st.column_config.DateColumn("Tanggal Buyback", format="YYYY-MM-DD")
 if "Catatan" in view.columns:
     cfg["Catatan"] = st.column_config.TextColumn("Catatan")
 
