@@ -270,17 +270,25 @@ INITIAL_DATA = [
     },
     {
         "NO": 29,
-        "PRINCIPAL": "CYNOSURE",
-        "PART NUMBER": "809-5000-000",
-        "DESCRIPTION": "PATIENT EYESHIELD, RB",
-        "QTY": 5
+    "PRINCIPAL": "CYNOSURE",
+    "PART NUMBER": "809-5000-000",
+    "DESCRIPTION": "PATIENT EYESHIELD, RB",
+    "QTY": 5,
+    "Qty_Buyback": 1,
+    "Status": "Sudah",
+    "Tanggal_Buyback": datetime.date(2025, 3, 6),
+    "Catatan": "Untuk Erha Clinic Samarinda"
     },
     {
         "NO": 30,
-        "PRINCIPAL": "CYNOSURE",
-        "PART NUMBER": "100-7017-069",
-        "DESCRIPTION": "HDT PROTECTIVE WNDW ADJ HNDPC 7.5\"",
-        "QTY": 4
+    "PRINCIPAL": "CYNOSURE",
+    "PART NUMBER": "100-7017-069",
+    "DESCRIPTION": "HDT PROTECTIVE WNDW ADJ HNDPC 7.5\"",
+    "QTY": 4,
+    "Qty_Buyback": 2,
+    "Status": "Sudah",
+    "Tanggal_Buyback": datetime.date(2025, 3, 6),
+    "Catatan": "Untuk team PM"
     },
     {
         "NO": 31,
