@@ -649,6 +649,19 @@ if "Sisa_Qty" in view_display.columns:
 # Tampilkan data editor tanpa kolom _ROW_ID
 edited = st.data_editor(view_display, use_container_width=True, hide_index=True, disabled=disabled_cols, column_config=cfg, num_rows="fixed", key="editor")
 
+# Tampilkan total di bawah tabel
+st.markdown("### Total per Kolom")
+total_row = {
+    "QTY": int(edited["QTY"].sum()),
+    "Qty_Buyback": int(edited["Qty_Buyback"].sum()),
+    "Sisa_Qty": int(edited["Sisa_Qty"].sum())
+}
+df_total = pd.DataFrame([total_row])
+st.dataframe(df_total.style.set_properties(**{
+    'font-weight': 'bold',
+    'background-color': '#f0f0f0'
+}), use_container_width=True)
+
 # Tambahkan kembali _ROW_ID ke edited dataframe untuk update
 edited["_ROW_ID"] = row_ids.values
 
