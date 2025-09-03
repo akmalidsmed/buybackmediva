@@ -579,7 +579,7 @@ with col2:
 with col3:
     st.markdown(f'<div class="metric-card metric-blue"><h3>{total_sisa_qty}</h3><p>Sisa Qty</p></div>', unsafe_allow_html=True)
 with col4:
-    st.markdown(f'<div class="metric-card metric-purple"><h3>{total_item}</h3><p>Total Item (Baris)</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-purple"><h3>{total_item}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
 
 st.divider()
 
