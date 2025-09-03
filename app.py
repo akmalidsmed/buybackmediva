@@ -563,7 +563,7 @@ def write_excel_to_bytes(df: pd.DataFrame) -> bytes:
 df = load_data()
 
 # ---------- Header ----------
-st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>Buyback Sparepart Tracking System</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>Buyback Sparepart Tracking System from IDSMED to Mediva</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
 
 # ---------- Summary KPI ----------
 total = len(df)
