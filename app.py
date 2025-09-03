@@ -566,21 +566,20 @@ df = load_data()
 st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>IDSMED–Mediva Spare Parts Buyback Tracking System</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
 
 # ---------- Summary KPI ----------
-total = len(df)
-sudah = int((df["Status"] == "Sudah").sum())
-belum = total - sudah
+total_qty = df["QTY"].sum()  # total unit awal
 total_qty_buyback = df["Qty_Buyback"].sum()
 total_sisa_qty = df["Sisa_Qty"].sum()
+total_item = len(df)  # jumlah baris item
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.markdown(f'<div class="metric-card metric-red"><h3>{total}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-red"><h3>{total_qty}</h3><p>Total Qty</p></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown(f'<div class="metric-card metric-green"><h3>{sudah}</h3><p>Sudah Buyback</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-green"><h3>{total_qty_buyback}</h3><p>Sudah Buyback</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown(f'<div class="metric-card metric-blue"><h3>{belum}</h3><p>Belum Buyback</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-blue"><h3>{total_sisa_qty}</h3><p>Sisa Qty</p></div>', unsafe_allow_html=True)
 with col4:
-    st.markdown(f'<div class="metric-card metric-purple"><h3>{total_sisa_qty}</h3><p>Total Sisa Qty</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-purple"><h3>{total_item}</h3><p>Total Item (Baris)</p></div>', unsafe_allow_html=True)
 
 st.divider()
 
