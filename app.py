@@ -566,11 +566,10 @@ df = load_data()
 st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>IDSMED–Mediva Spare Parts Buyback Tracking System</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
 
 # ---------- Summary KPI ----------
-total_qty = df["QTY"].sum()  # total unit awal
-total_qty_buyback = df["Qty_Buyback"].sum()
-total_sisa_qty = df["Sisa_Qty"].sum()
+total_qty = int(df["QTY"].sum())  # total unit awal, integer
+total_qty_buyback = int(df["Qty_Buyback"].sum())
+total_sisa_qty = total_qty - total_qty_buyback  # hitung sisa qty total secara logika
 total_item = len(df)  # jumlah baris item
-
 col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown(f'<div class="metric-card metric-red"><h3>{total_item}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
