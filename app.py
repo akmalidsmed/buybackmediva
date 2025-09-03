@@ -1,3 +1,4 @@
+
 import io
 import datetime
 import pandas as pd
@@ -18,8 +19,6 @@ st.markdown("""
             font-family: 'Arial', sans-serif;
             margin-bottom: 20px;
         }
-
-        /* Metric Cards */
         .metric-card {
             background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
             border-radius: 20px;
@@ -33,75 +32,16 @@ st.markdown("""
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-
         .metric-red { background: linear-gradient(45deg, #ff6b6b, #ff9e7d); color: white; }
         .metric-green { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
         .metric-blue { background: linear-gradient(45deg, #54a0ff, #2e86de); color: white; }
         .metric-purple { background: linear-gradient(45deg, #667eea, #764ba2); color: white; }
-
-        /* Sidebar Styling */
         .sidebar-content {
             background: linear-gradient(180deg, #f8f9ff 0%, #e6f3ff 100%);
             padding: 20px;
             border-radius: 15px;
             margin: 10px;
         }
-
-        /* Table Styling */
-        .table-header {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
-            color: white !important;
-            font-weight: bold !important;
-        }
-
-        /* Button Styling */
-        .btn-gradient {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        .btn-gradient:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #54a0ff, #2e86de);
-        }
-
-        /* Main Content */
-        .main-content {
-            background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(248,250,251,0.9));
-            border-radius: 20px;
-            padding: 20px;
-            margin: 10px;
-        }
-
-        /* Glow effect for metrics */
-        .metric-card:nth-child(1) { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
-        .metric-card:nth-child(2) { box-shadow: 0 0 20px rgba(78, 205, 196, 0.3); }
-        .metric-card:nth-child(3) { box-shadow: 0 0 20px rgba(84, 160, 255, 0.3); }
-        .metric-card:nth-child(4) { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
-
-        /* Filters Section */
         .filters-section {
             background: linear-gradient(45deg, #f0f9ff, #e0f2fe);
             padding: 20px;
@@ -109,8 +49,6 @@ st.markdown("""
             margin-bottom: 20px;
             border-left: 5px solid #667eea;
         }
-
-        /* Error message */
         .error-msg {
             background: linear-gradient(45deg, #fee2e2, #fecaca);
             border: 1px solid #f87171;
@@ -119,8 +57,6 @@ st.markdown("""
             border-radius: 10px;
             margin: 10px 0;
         }
-
-        /* Success message */
         .success-msg {
             background: linear-gradient(45deg, #d1fae5, #a7f3d0);
             border: 1px solid #34d399;
@@ -334,118 +270,244 @@ INITIAL_DATA = [
     },
     {
         "NO": 29,
-        "PRINCIPAL": "NEWPONG",
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "809-5000-000",
+        "DESCRIPTION": "PATIENT EYESHIELD, RB",
+        "QTY": 5
+    },
+    {
+        "NO": 30,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7017-069",
+        "DESCRIPTION": "HDT PROTECTIVE WNDW ADJ HNDPC 7.5\"",
+        "QTY": 4
+    },
+    {
+        "NO": 31,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1836-005",
+        "DESCRIPTION": "LENS, PL/CX, 18X36FL, 585, 755, 1064, ROHS",
+        "QTY": 9
+    },
+    {
+        "NO": 32,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "102-0189",
+        "DESCRIPTION": "LENS,  +60MM X 20MM DIA, ROHS 2 (HF I)",
+        "QTY": 5
+    },
+    {
+        "NO": 33,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "656-0305",
+        "DESCRIPTION": "WASH BOTTLE 1L",
+        "QTY": 3
+    },
+    {
+        "NO": 34,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1224-005",
+        "DESCRIPTION": "LENS, PL/CX, 12X24FL, 585, 755, 1064, ROHS",
+        "QTY": 8
+    },
+    {
+        "NO": 35,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1248-005",
+        "DESCRIPTION": "LENS, PL/CX, 12X48FL, 585, 755, 1064, ROHS",
+        "QTY": 8
+    },
+    {
+        "NO": 36,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "312-9100",
+        "DESCRIPTION": "FILTER, WATER, ROHS",
+        "QTY": 7
+    },
+    {
+        "NO": 37,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1530-005",
+        "DESCRIPTION": "LENS, PL/CX, 15X30FL, 585, 755, 1064, ROHS",
+        "QTY": 9
+    },
+    {
+        "NO": 38,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-056",
+        "DESCRIPTION": "SPACER FIXED HANDPIECE",
+        "QTY": 2
+    },
+    {
+        "NO": 39,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "990-8006-200",
+        "DESCRIPTION": "FLASHLAMP, LIN, 6\"ARC, 7X9MM, 200T (PDL)",
+        "QTY": 1
+    },
+    {
+        "NO": 40,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "990-8006-200",
+        "DESCRIPTION": "FLASHLAMP, LIN, 6\"ARC, 7X9MM, 200T (PDL)",
+        "QTY": 1
+    },
+    {
+        "NO": 41,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 42,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 43,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 44,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 45,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "313-0099",
+        "DESCRIPTION": "DI FILTER, ARROWHD #CAPSULE, ROHS",
+        "QTY": 13
+    },
+    {
+        "NO": 46,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "130-7002-089",
+        "DESCRIPTION": "SHUTTER MOUNT, BEAM BLOCK, CYNERGY",
+        "QTY": 5
+    },
+    {
+        "NO": 47,
+        "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-7026-061",
         "DESCRIPTION": "ASSY, LUX LOTION KIT, SINGLE",
         "QTY": 3
     },
     {
-        "NO": 30,
+        "NO": 48,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "130-7002-093",
         "DESCRIPTION": "SHUTTER, BEAM BLOCK, CYNERGY, ROHS",
         "QTY": 5
     },
     {
-        "NO": 31,
+        "NO": 49,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-1754-150",
         "DESCRIPTION": "HANDPIECE 15MM",
         "QTY": 7
     },
     {
-        "NO": 32,
+        "NO": 50,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-1757-070",
         "DESCRIPTION": "HANDPIECE 7MM",
         "QTY": 1
     },
     {
-        "NO": 33,
+        "NO": 51,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-7012-040",
         "DESCRIPTION": "ASSY, OPTICAL MOUNT, PICOSURE, HMR",
         "QTY": 3
     },
     {
-        "NO": 34,
+        "NO": 52,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-7012-105",
         "DESCRIPTION": "ASSY, OPTICAL MOUNT, PICOSURE, PCMR",
         "QTY": 3
     },
     {
-        "NO": 35,
+        "NO": 53,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-7012-532",
         "DESCRIPTION": "PICOSURE 532DS",
         "QTY": 1
     },
     {
-        "NO": 36,
+        "NO": 54,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-7012-532",
         "DESCRIPTION": "PICOSURE 532DS",
         "QTY": 1
     },
     {
-        "NO": 37,
+        "NO": 55,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "130-7051-190",
         "DESCRIPTION": "TRAY, REMOVABLE, TOP CVR, PICO300",
         "QTY": 7
     },
     {
-        "NO": 38,
+        "NO": 56,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "656-1000",
         "DESCRIPTION": "HANDPIECE RL SI",
         "QTY": 1
     },
     {
-        "NO": 39,
+        "NO": 57,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "661-0069",
         "DESCRIPTION": "HANDPIECE ADAPTER RL SI",
         "QTY": 1
     },
     {
-        "NO": 40,
+        "NO": 58,
         "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "CAT NP100-0004",
         "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
         "QTY": 1
     },
     {
-        "NO": 41,
+        "NO": 59,
         "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "CAT NP100-0004",
         "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
         "QTY": 1
     },
     {
-        "NO": 42,
+        "NO": 60,
         "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "CAT NP100-0004",
         "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
         "QTY": 1
     },
     {
-        "NO": 43,
+        "NO": 61,
         "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "CAT NP100-0004",
         "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
         "QTY": 1
     },
     {
-        "NO": 44,
+        "NO": 62,
         "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "CAT NP100-0004",
         "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
         "QTY": 1
     },
     {
-        "NO": 45,
+        "NO": 63,
         "PRINCIPAL": "NEWPONG",
         "PART NUMBER": "CAT NP100-0004",
         "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
@@ -455,7 +517,6 @@ INITIAL_DATA = [
 
 def load_data() -> pd.DataFrame:
     df = pd.DataFrame(INITIAL_DATA)
-    # Add buyback tracking columns if not exist
     if "Status" not in df.columns:
         df["Status"] = "Belum"
     if "Tanggal_Buyback" not in df.columns:
@@ -463,15 +524,12 @@ def load_data() -> pd.DataFrame:
     if "Catatan" not in df.columns:
         df["Catatan"] = ""
     if "Qty_Buyback" not in df.columns:
-        df["Qty_Buyback"] = 0  # default 0
+        df["Qty_Buyback"] = 0
     df["Tanggal_Buyback"] = pd.to_datetime(df["Tanggal_Buyback"], errors="coerce").dt.date
     df = df.reset_index(drop=True)
     df.insert(0, "_ROW_ID", range(1, len(df)+1))
-
-    # Calculate Sisa Qty
     df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
-    df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0  # jangan negatif
-
+    df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
     return df
 
 def filtered_df(df: pd.DataFrame, status_opt: str, search: str) -> pd.DataFrame:
@@ -497,7 +555,7 @@ def write_excel_to_bytes(df: pd.DataFrame) -> bytes:
 df = load_data()
 
 # ---------- Header ----------
-st.markdown('<div class="gradient-bg"><h1 style="font-size: 2.5em; margin-bottom: 10px;">🔄 IDSMED - Mediva</h1><h2>Buyback Sparepart Tracking System</h2><p style="margin-top: 10px;">Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>Buyback Sparepart Tracking System</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
 
 # ---------- Summary KPI ----------
 total = len(df)
@@ -506,17 +564,15 @@ belum = total - sudah
 total_qty_buyback = df["Qty_Buyback"].sum()
 total_sisa_qty = df["Sisa_Qty"].sum()
 
-st.markdown('<div class="main-content">', unsafe_allow_html=True)
-
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.markdown(f'<div class="metric-card metric-red"><h3 style="font-size: 2em; margin-bottom: 5px;">{total}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-red"><h3>{total}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown(f'<div class="metric-card metric-green"><h3 style="font-size: 2em; margin-bottom: 5px;">{sudah}</h3><p>Sudah Buyback</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-green"><h3>{sudah}</h3><p>Sudah Buyback</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown(f'<div class="metric-card metric-blue"><h3 style="font-size: 2em; margin-bottom: 5px;">{belum}</h3><p>Belum Buyback</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-blue"><h3>{belum}</h3><p>Belum Buyback</p></div>', unsafe_allow_html=True)
 with col4:
-    st.markdown(f'<div class="metric-card metric-purple"><h3 style="font-size: 2em; margin-bottom: 5px;">{total_sisa_qty}</h3><p>Total Sisa Qty</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-purple"><h3>{total_sisa_qty}</h3><p>Total Sisa Qty</p></div>', unsafe_allow_html=True)
 
 st.divider()
 
@@ -535,139 +591,68 @@ with st.sidebar:
 
 # ---------- Filters Section ----------
 st.markdown('<div class="filters-section">', unsafe_allow_html=True)
-st.markdown("### 🔍 Filter Data")
 col_a, col_b = st.columns(2)
 with col_a:
     show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
 with col_b:
     show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
-
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- Apply Filters ----------
 view = filtered_df(df, status_opt, search)
-
 if show_complete:
     view = view[view["Sisa_Qty"] > 0]
 elif show_zero_sisa:
     view = view[view["Sisa_Qty"] == 0]
 
-# ---------- Editable Columns Configuration ----------
+# ---------- Editable Columns ----------
 editable_cols = [c for c in ["Status", "Tanggal_Buyback", "Catatan", "Qty_Buyback"] if c in view.columns]
 disabled_cols = [c for c in view.columns if c not in editable_cols]
 
 cfg = {}
 if "Status" in view.columns:
-    cfg["Status"] = st.column_config.SelectboxColumn(
-        "Status", options=["Belum", "Sudah"], default="Belum"
-    )
+    cfg["Status"] = st.column_config.SelectboxColumn("Status", options=["Belum", "Sudah"], default="Belum")
 if "Tanggal_Buyback" in view.columns:
-    cfg["Tanggal_Buyback"] = st.column_config.DateColumn(
-        "Tanggal Buyback", format="YYYY-MM-DD",
-        default=None
-    )
+    cfg["Tanggal_Buyback"] = st.column_config.DateColumn("Tanggal Buyback", format="YYYY-MM-DD", default=None)
 if "Catatan" in view.columns:
     cfg["Catatan"] = st.column_config.TextColumn("Catatan")
 if "Qty_Buyback" in view.columns:
-    cfg["Qty_Buyback"] = st.column_config.NumberColumn(
-        "Qty Buyback",
-        min_value=0,
-        max_value=None,
-        step=1,
-        help="Jumlah unit yang sudah dibuyback, maksimal sama dengan QTY"
-    )
-if "NO" in view.columns:
-    cfg["NO"] = st.column_config.NumberColumn("NO", disabled=True)
-if "QTY" in view.columns:
-    cfg["QTY"] = st.column_config.NumberColumn("QTY", disabled=True)
+    cfg["Qty_Buyback"] = st.column_config.NumberColumn("Qty Buyback", min_value=0, step=1, help="Jumlah unit yang sudah dibuyback, maksimal sama dengan QTY")
 if "Sisa_Qty" in view.columns:
-    cfg["Sisa_Qty"] = st.column_config.NumberColumn(
-        "Sisa Qty",
-        disabled=True,
-        help="Sisa unit yang belum dibuyback (otomatis dihitung)"
-    )
+    cfg["Sisa_Qty"] = st.column_config.NumberColumn("Sisa Qty", disabled=True, help="Sisa unit yang belum dibuyback (otomatis)")
 
 # ---------- Table (Editable) ----------
 st.markdown("### 📊 Data Buyback")
-edited = st.data_editor(
-    view,
-    use_container_width=True,
-    hide_index=True,
-    disabled=disabled_cols,
-    column_config=cfg,
-    num_rows="fixed",
-    key="editor",
-)
+edited = st.data_editor(view, use_container_width=True, hide_index=True, disabled=disabled_cols, column_config=cfg, num_rows="fixed", key="editor")
 
-# ---------- Validation and Update ----------
+# ---------- Validation ----------
 validation_passed = True
-error_messages = []
-
-# Check for invalid Qty Buyback
 invalid_rows = edited[edited["Qty_Buyback"] > edited["QTY"]]
 if not invalid_rows.empty:
     validation_passed = False
-    error_messages.append("Qty Buyback tidak boleh lebih besar dari Qty total!")
+    st.markdown('<div class="error-msg">⚠️ Qty Buyback tidak boleh lebih besar dari Qty total!</div>', unsafe_allow_html=True)
 
-# Calculate Sisa Qty
+# ---------- Apply Changes ----------
 if validation_passed:
     edited["Sisa_Qty"] = edited["QTY"] - edited["Qty_Buyback"]
     edited.loc[edited["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
-else:
-    st.markdown('<div class="error-msg">⚠️ ' + " ".join(error_messages) + '</div>', unsafe_allow_html=True)
-
-# ---------- Apply Changes to Main DataFrame ----------
-if validation_passed:
     if not edited.equals(view):
         base = df.set_index("_ROW_ID")
         upd = edited.set_index("_ROW_ID")
         base.update(upd[editable_cols])
         df = base.reset_index()
-
-        # Recalculate Sisa Qty for main df
         df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
         df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
-
-        # Show success message
         st.markdown('<div class="success-msg">✅ Data berhasil diperbarui!</div>', unsafe_allow_html=True)
 
-# ---------- Update Statistics ----------
-total = len(df)
-sudah = int((df["Status"] == "Sudah").sum())
-belum = total - sudah
-total_qty_buyback = df["Qty_Buyback"].sum()
-total_sisa_qty = df["Sisa_Qty"].sum()
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ---------- Actions ----------
+# ---------- Download ----------
 st.markdown("### 💾 Download Data")
 bytes_xlsx = write_excel_to_bytes(df)
-st.download_button(
-    "⬇️ Download Excel yang sudah diupdate",
-    data=bytes_xlsx,
-    file_name=f"Data Buyback Mediva - updated {DATE_TODAY}.xlsx",
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    use_container_width=True
-)
+st.download_button("⬇️ Download Excel yang sudah diupdate", data=bytes_xlsx,
+                   file_name=f"Data Buyback Mediva - updated {DATE_TODAY}.xlsx",
+                   mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                   use_container_width=True)
 st.caption("Gunakan tombol download untuk menyimpan perubahan permanen.")
 
-# ---------- Additional Info ----------
-st.markdown("---")
-with st.expander("ℹ️ Panduan Penggunaan"):
-    st.write("""
-    - **Qty Buyback**: Masukkan jumlah unit yang sudah dibuyback (misal: 2 dari 38 unit)
-    - **Sisa Qty**: Otomatis dihitung = Qty - Qty Buyback
-    - **Status**: Ubah menjadi "Sudah" jika buyback sudah selesai 100%
-    - **Tanggal Buyback**: Tanggal terakhir buyback dilakukan
-    - **Catatan**: Catatan tambahan tentang buyback atau kondisi item
-    """)
-
 # ---------- Footer ----------
-st.markdown("""
-    <div style="text-align: center; margin-top: 30px;">
-        <p style="color: #666;">© 2025 IDSMED - Mediva Buyback Tracking System</p>
-        <p>Created by Akmaludin Agustian for Heru Utomo</p>
-        <p style="font-size: 0.8em; color: #888;">Managed by Akmaludin Agustian for Heru Utomo | Location: Logos</p>
-    </div>
-""", unsafe_allow_html=True)
+st.markdown("<hr><div style='text-align:center;'><p>© 2025 IDSMED - Mediva Buyback Tracking System</p></div>", unsafe_allow_html=True)
