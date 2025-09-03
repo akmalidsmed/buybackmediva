@@ -596,13 +596,13 @@ with st.sidebar:
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- Filters Section ----------
-st.markdown('<div class="filters-section">', unsafe_allow_html=True)
-col_a, col_b = st.columns(2)
-with col_a:
-    show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
-with col_b:
-    show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
-st.markdown('</div>', unsafe_allow_html=True)
+# st.markdown('<div class="filters-section">', unsafe_allow_html=True)
+# col_a, col_b = st.columns(2)
+# with col_a:
+#     show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
+# with col_b:
+#     show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
+# st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- Apply Filters ----------
 view = filtered_df(df, status_opt, search)
