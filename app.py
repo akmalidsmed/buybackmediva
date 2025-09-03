@@ -594,7 +594,9 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Tip: Klik header kolom untuk sort / filter tambahan.")
     st.markdown('</div>', unsafe_allow_html=True)
-
+with st.sidebar:
+    show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
+    show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
 # ---------- Apply Filters ----------
 view = filtered_df(df, status_opt, search)
 if show_complete:
