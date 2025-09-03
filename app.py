@@ -629,7 +629,35 @@ if "Sisa_Qty" in view.columns:
 
 # ---------- Table (Editable) ----------
 st.markdown("### 📊 Data Buyback")
-edited = st.data_editor(view, use_container_width=True, hide_index=True, disabled=disabled_cols, column_config=cfg, num_rows="fixed", key="editor")
+
+# Simpan _ROW_ID terpisah untuk update nanti
+row_ids = view["_ROW_ID"]
+
+# Drop kolom _ROW_ID agar tidak tampil di tabel
+view_display = view.drop(columns=["_ROW_ID"], errors="ignore")
+
+# Tentukan kolom yang bisa diedit dan yang disabled
+editable_cols = [c for c in ["Status", "Tanggal_Buyback", "Catatan", "Qty_Buyback"] if c in view_display.columns]
+disabled_cols = [c for c in view_display.columns if c not in editable_cols]
+
+# Konfigurasi kolom
+cfg = {}
+if "Status" in view_display.columns:
+    cfg["Status"] = st.column_config.SelectboxColumn("Status", options=["Belum", "Sudah"], default="Belum")
+if "Tanggal_Buyback" in view_display.columns:
+    cfg["Tanggal_Buyback"] = st.column_config.DateColumn("Tanggal Buyback", format="YYYY-MM-DD", default=None)
+if "Catatan" in view_display.columns:
+    cfg["Catatan"] = st.column_config.TextColumn("Catatan")
+if "Qty_Buyback" in view_display.columns:
+    cfg["Qty_Buyback"] = st.column_config.NumberColumn("Qty Buyback", min_value=0, step=1, help="Jumlah unit yang sudah dibuyback, maksimal sama dengan QTY")
+if "Sisa_Qty" in view_display.columns:
+    cfg["Sisa_Qty"] = st.column_config.NumberColumn("Sisa Qty", disabled=True, help="Sisa unit yang belum dibuyback (otomatis)")
+
+# Tampilkan data editor tanpa kolom _ROW_ID
+edited = st.data_editor(view_display, use_container_width=True, hide_index=True, disabled=disabled_cols, column_config=cfg, num_rows="fixed", key="editor")
+
+# Tambahkan kembali _ROW_ID ke edited dataframe untuk update
+edited["_ROW_ID"] = row_ids.values
 
 # ---------- Validation ----------
 validation_passed = True
