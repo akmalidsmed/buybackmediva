@@ -1,3 +1,4 @@
+
 import io
 import datetime
 import pandas as pd
@@ -25,20 +26,16 @@ st.markdown("""
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             margin: 10px;
-            cursor: pointer;
             text-align: center;
         }
         .metric-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        /* Custom colors for each box */
-        .metric-total { background: linear-gradient(45deg, #89f7fe, #66a6ff); color: white; }
-        .metric-qty { background: linear-gradient(45deg, #f7971e, #ffd200); color: white; }
-        .metric-sudah { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
-        .metric-belum { background: linear-gradient(45deg, #ff6b6b, #ff9e7d); color: white; }
-        .metric-sisa { background: linear-gradient(45deg, #6a11cb, #2575fc); color: white; }
-        /* Sidebar styling remains unchanged */
+        .metric-red { background: linear-gradient(45deg, #ff6b6b, #ff9e7d); color: white; }
+        .metric-green { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
+        .metric-blue { background: linear-gradient(45deg, #54a0ff, #2e86de); color: white; }
+        .metric-purple { background: linear-gradient(45deg, #667eea, #764ba2); color: white; }
         .sidebar-content {
             background: linear-gradient(180deg, #f8f9ff 0%, #e6f3ff 100%);
             padding: 20px;
