@@ -193,7 +193,7 @@ INITIAL_DATA = [
     "Qty_Buyback": 1,
     "Status": "Sudah",
     "Tanggal_Buyback": datetime.date(2025, 9, 4),  # update ke tanggal hari ini
-    "Catatan": "Untuk PO di Bamed Clinic Menteng"
+    "Catatan": "Untuk Bamed Clinic Menteng"
     },
     {
         "NO": 18,
