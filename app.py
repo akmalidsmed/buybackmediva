@@ -627,19 +627,25 @@ with st.sidebar:
     st.markdown('</div>', unsafe_allow_html=True)
 
 with st.sidebar:
-    filter_status = st.radio(
-        "Filter berdasarkan status buyback:",
-        options=["Semua", "Tampilkan yang sudah dibuyback", "Tampilkan yang sudah dibuyback sebagian", "Tampilkan yang belum dibuyback"],
-        index=0
-    )
+st.markdown("Filter berdasarkan status buyback:")
+filter_sudah = st.checkbox("Sudah", value=False)
+filter_sebagian = st.checkbox("Sudah sebagian", value=False)
+filter_belum = st.checkbox("Belum", value=False)
+
 # ---------- Apply Filters ----------
-view = filtered_df(df, status_opt, search)
-if filter_status == "Tampilkan yang sudah dibuyback":
-    view = view[view["Status"] == "Sudah"]
-elif filter_status == "Tampilkan yang sudah dibuyback sebagian":
-    view = view[view["Status"] == "Sudah sebagian"]
-elif filter_status == "Tampilkan yang belum dibuyback":
-    view = view[view["Status"] == "Belum"]
+# Jika tidak ada checkbox yang dicentang, tampilkan semua
+if not (filter_sudah or filter_sebagian or filter_belum):
+    # Tampilkan semua (tidak filter)
+    pass
+else:
+    kondisi = pd.Series(False, index=view.index)
+    if filter_sudah:
+        kondisi = kondisi | (view["Status"] == "Sudah")
+    if filter_sebagian:
+        kondisi = kondisi | (view["Status"] == "Sudah sebagian")
+    if filter_belum:
+        kondisi = kondisi | (view["Status"] == "Belum")
+    view = view[kondisi]
 
 # ---------- Editable Columns ----------
 editable_cols = [c for c in ["Status", "Tanggal_Buyback", "Catatan", "Qty_Buyback"] if c in view.columns]
