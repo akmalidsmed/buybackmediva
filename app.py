@@ -620,8 +620,8 @@ st.divider()
 
 # ---------- Sidebar Filters ----------
 with st.sidebar:
-st.markdown('<div class="sidebar-content"><h3 style="color: #667eea;">Filter</h3>', unsafe_allow_html=True)
-status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah sebagian", "Sudah"], index=0)
+    st.markdown('<div class="sidebar-content"><h3 style="color: #667eea;">Filter</h3>', unsafe_allow_html=True)
+    status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah sebagian", "Sudah"], index=0)
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
     st.markdown("---")
     st.markdown('</div>', unsafe_allow_html=True)
