@@ -621,21 +621,22 @@ st.divider()
 # ---------- Sidebar Filters ----------
 with st.sidebar:
     st.markdown('<div class="sidebar-content"><h3 style="color: #667eea; text-align: center;">Filter</h3>', unsafe_allow_html=True)
-    status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah sebagian", "Sudah"], index=0)
+    # Hapus selectbox status karena kita pakai checkbox
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
     st.markdown("---")
+    st.markdown("Filter berdasarkan status buyback:")
+    filter_sudah = st.checkbox("Sudah", value=False)
+    filter_sebagian = st.checkbox("Sudah sebagian", value=False)
+    filter_belum = st.checkbox("Belum", value=False)
     st.markdown('</div>', unsafe_allow_html=True)
 
-with st.sidebar:
-st.markdown("Filter berdasarkan status buyback:")
-filter_sudah = st.checkbox("Sudah", value=False)
-filter_sebagian = st.checkbox("Sudah sebagian", value=False)
-filter_belum = st.checkbox("Belum", value=False)
-
 # ---------- Apply Filters ----------
-# Jika tidak ada checkbox yang dicentang, tampilkan semua
+# Mulai dari data lengkap
+view = filtered_df(df, "Semua", search)  # status_opt diisi "Semua" karena sudah pakai checkbox
+
+# Terapkan filter checkbox status buyback
 if not (filter_sudah or filter_sebagian or filter_belum):
-    # Tampilkan semua (tidak filter)
+    # Tidak ada filter status, tampilkan semua
     pass
 else:
     kondisi = pd.Series(False, index=view.index)
