@@ -725,5 +725,5 @@ st.download_button("⬇️ Download Excel yang sudah diupdate", data=bytes_xlsx,
                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                    use_container_width=True)
 
-# ---------- Footer ----------
 st.markdown("<hr><div style='text-align:center;'><p>© 2025 IDSMED - Mediva Buyback Tracking System</p></div>", unsafe_allow_html=True)
+# ---------- Footer ----------
