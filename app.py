@@ -1,4 +1,4 @@
-
+import numpy as np
 import io
 import datetime
 import pandas as pd
@@ -564,6 +564,19 @@ def write_excel_to_bytes(df: pd.DataFrame) -> bytes:
     return buf.read()
 
 # ---------- Load Data ----------
+def update_status(df: pd.DataFrame) -> pd.DataFrame:
+    # Kondisi status:
+    # Jika Qty_Buyback == 0 => "Belum"
+    # Jika Qty_Buyback > 0 dan Sisa_Qty > 0 => "Sudah sebagian"
+    # Jika Sisa_Qty == 0 => "Sudah"
+    conditions = [
+        (df["Qty_Buyback"] == 0),
+        (df["Qty_Buyback"] > 0) & (df["Sisa_Qty"] > 0),
+        (df["Sisa_Qty"] == 0)
+    ]
+    choices = ["Belum", "Sudah sebagian", "Sudah"]
+    df["Status"] = pd.Categorical(np.select(conditions, choices, default="Belum"), categories=choices, ordered=True)
+    return df
 df = load_data()
 
 # ---------- Header ----------
