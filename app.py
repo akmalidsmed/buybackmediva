@@ -625,7 +625,7 @@ with st.sidebar:
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
     st.markdown("---")
     st.markdown("Filter berdasarkan status buyback:")
-    filter_sudah = st.checkbox("Sudah", value=False)
+    filter_sudah = st.checkbox("Sudah selesai", value=False)
     filter_sebagian = st.checkbox("Sudah sebagian", value=False)
     filter_belum = st.checkbox("Belum", value=False)
     st.markdown('</div>', unsafe_allow_html=True)
