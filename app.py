@@ -206,8 +206,19 @@ DATE_TODAY = datetime.date.today()
 
 # ---------- Embedded Data from Excel ----------
 INITIAL_DATA = [
-    # (Your existing INITIAL_DATA here, unchanged)
-    # For brevity, omitted here but use your full INITIAL_DATA list as in your code
+    # Masukkan data lengkap Anda di sini, contoh singkat:
+    {
+        "NO": 1,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7026-865",
+        "DESCRIPTION": "ASSY, WEARABLES KIT, SCULP, SUBMENTAL, STD",
+        "QTY": 2,
+        "Qty_Buyback": 0,
+        "Status": "Belum",
+        "Tanggal_Buyback": None,
+        "Catatan": ""
+    },
+    # Tambahkan data lainnya sesuai kebutuhan...
 ]
 
 def load_data() -> pd.DataFrame:
@@ -368,10 +379,4 @@ if validation_passed:
 st.markdown("### 💾 Download Data")
 bytes_xlsx = write_excel_to_bytes(df)
 st.download_button("⬇️ Download Excel yang sudah diupdate", data=bytes_xlsx,
-                   file_name=f"Data Buyback Mediva - updated {DATE_TODAY}.xlsx",
-                   mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                   use_container_width=True)
-st.caption("Gunakan tombol download untuk menyimpan perubahan permanen.")
-
-# ---------- Footer ----------
-st.markdown("<hr><footer><p>© 2025 IDSMED - Mediva Buyback Tracking System</
+                   file_name=f"Data Buy
