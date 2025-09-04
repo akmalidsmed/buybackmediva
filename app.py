@@ -599,7 +599,7 @@ def load_data() -> pd.DataFrame:
 df = load_data()
 
 # ---------- Header ----------
-st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>IDSMED–Mediva Spare Parts Buyback Tracking System</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>IDSMED–Mediva Spare Parts Buyback Tracking System</h2><p>Location: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
 
 # ---------- Summary KPI ----------
 total_qty = int(df["QTY"].sum())  # total unit awal, integer
