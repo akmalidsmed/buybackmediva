@@ -1,3 +1,4 @@
+
 import io
 import datetime
 import pandas as pd
@@ -8,196 +9,61 @@ st.set_page_config(page_title="IDSMED - Mediva Buyback Tracker", page_icon="🔄
 # ---------- Custom CSS for Colorful Design ----------
 st.markdown("""
     <style>
-        /* Background Gradient for entire app */
-        .stApp {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        /* Header */
+        /* Background Gradient */
         .gradient-bg {
-            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px 20px;
-            border-radius: 25px;
+            padding: 20px;
+            border-radius: 20px;
             text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 30px rgb(255 75 43 / 0.5);
-            user-select: none;
+            font-family: 'Arial', sans-serif;
+            margin-bottom: 20px;
         }
-        .gradient-bg h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 0.2rem;
-            letter-spacing: 0.1em;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-        .gradient-bg h2 {
-            font-weight: 600;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.9;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.25);
-        }
-        .gradient-bg p {
-            font-weight: 400;
-            font-size: 1rem;
-            opacity: 0.8;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-        /* Metric Cards */
         .metric-card {
-            border-radius: 25px;
-            padding: 25px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             margin: 10px;
             text-align: center;
-            cursor: default;
-            user-select: none;
-            font-weight: 700;
-            font-size: 2.5rem;
-            color: white;
-            letter-spacing: 0.05em;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
         .metric-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        .metric-red {
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-        }
-        .metric-green {
-            background: linear-gradient(45deg, #43cea2, #185a9d);
-        }
-        .metric-blue {
-            background: linear-gradient(45deg, #36d1dc, #5b86e5);
-        }
-        .metric-purple {
-            background: linear-gradient(45deg, #7b2ff7, #f107a3);
-        }
-        .metric-card p {
-            font-size: 1.1rem;
-            margin-top: 8px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-        /* Sidebar */
+        .metric-red { background: linear-gradient(45deg, #ff6b6b, #ff9e7d); color: white; }
+        .metric-green { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
+        .metric-blue { background: linear-gradient(45deg, #54a0ff, #2e86de); color: white; }
+        .metric-purple { background: linear-gradient(45deg, #667eea, #764ba2); color: white; }
         .sidebar-content {
-            background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 25px 20px;
-            border-radius: 20px;
-            margin: 10px 0 20px 0;
-            box-shadow: 0 6px 20px rgb(0 0 0 / 0.1);
-            color: #0c4a6e;
-            font-weight: 600;
-            user-select: none;
+            background: linear-gradient(180deg, #f8f9ff 0%, #e6f3ff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 10px;
         }
-        .sidebar-content h3 {
-            color: #2563eb;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            text-align: center;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        /* Filters Section */
         .filters-section {
-            background: linear-gradient(45deg, #dbeafe, #bfdbfe);
+            background: linear-gradient(45deg, #f0f9ff, #e0f2fe);
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 20px;
-            border-left: 6px solid #3b82f6;
-            box-shadow: 0 4px 15px rgb(59 130 246 / 0.3);
-            color: #1e40af;
-            font-weight: 600;
+            border-left: 5px solid #667eea;
         }
-        /* Error and Success Messages */
         .error-msg {
             background: linear-gradient(45deg, #fee2e2, #fecaca);
             border: 1px solid #f87171;
             color: #b91c1c;
             padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgb(220 38 38 / 0.3);
-            user-select: none;
+            border-radius: 10px;
+            margin: 10px 0;
         }
         .success-msg {
             background: linear-gradient(45deg, #d1fae5, #a7f3d0);
             border: 1px solid #34d399;
             color: #047857;
             padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgb(34 197 94 / 0.3);
-            user-select: none;
-        }
-        /* Data Editor Table */
-        .stDataFrame table {
-            border-radius: 15px !important;
-            overflow: hidden !important;
-            box-shadow: 0 8px 30px rgb(0 0 0 / 0.15) !important;
-            border-collapse: separate !important;
-            border-spacing: 0 !important;
-            background: white !important;
-            color: #1e293b !important;
-            font-weight: 600 !important;
-        }
-        .stDataFrame thead tr {
-            background: linear-gradient(90deg, #3b82f6, #2563eb) !important;
-            color: white !important;
-            font-weight: 700 !important;
-            font-size: 1rem !important;
-        }
-        .stDataFrame tbody tr:hover {
-            background-color: #bfdbfe !important;
-            cursor: pointer !important;
-        }
-        /* Selectbox and Inputs */
-        div[role="combobox"] > div > input {
-            font-weight: 600 !important;
-            color: #1e293b !important;
-        }
-        /* Download Button */
-        button[title="Download file"] {
-            background: linear-gradient(45deg, #7b2ff7, #f107a3);
-            color: white;
-            font-weight: 700;
-            border-radius: 15px;
-            padding: 10px 20px;
-            box-shadow: 0 8px 30px rgb(241 7 163 / 0.5);
-            transition: background 0.3s ease;
-        }
-        button[title="Download file"]:hover {
-            background: linear-gradient(45deg, #f107a3, #7b2ff7);
-            box-shadow: 0 12px 40px rgb(123 47 247 / 0.7);
-        }
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            font-weight: 600;
-            color: #e0e7ff;
-            user-select: none;
-        }
-        /* Responsive tweaks */
-        @media (max-width: 768px) {
-            .metric-card {
-                font-size: 2rem !important;
-                padding: 20px 15px !important;
-            }
-            .gradient-bg h1 {
-                font-size: 2rem !important;
-            }
-            .gradient-bg h2 {
-                font-size: 1.1rem !important;
-            }
+            border-radius: 10px;
+            margin: 10px 0;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -206,19 +72,459 @@ DATE_TODAY = datetime.date.today()
 
 # ---------- Embedded Data from Excel ----------
 INITIAL_DATA = [
-    # Masukkan data lengkap Anda di sini, contoh singkat:
     {
         "NO": 1,
         "PRINCIPAL": "CYNOSURE",
         "PART NUMBER": "100-7026-865",
         "DESCRIPTION": "ASSY, WEARABLES KIT, SCULP, SUBMENTAL, STD",
-        "QTY": 2,
-        "Qty_Buyback": 0,
-        "Status": "Belum",
-        "Tanggal_Buyback": None,
-        "Catatan": ""
+        "QTY": 2
     },
-    # Tambahkan data lainnya sesuai kebutuhan...
+    {
+        "NO": 2,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "S805-0035-005",
+        "DESCRIPTION": "WINDOW, 625DIA, 585, 755, 1064, SAPHIRE",
+        "QTY": 38
+    },
+    {
+        "NO": 3,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "ASY-13442",
+        "DESCRIPTION": "10 PAC KEY SCULPSURE SUBMNTL 1PK SEC",
+        "QTY": 8
+    },
+    {
+        "NO": 4,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "700-4001-200",
+        "DESCRIPTION": "HVPS, 1200V, 4KJ/SEC, CYNERGY",
+        "QTY": 1
+    },
+    {
+        "NO": 5,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "700-4001-200",
+        "DESCRIPTION": "HVPS, 1200V, 4KJ/SEC, CYNERGY",
+        "QTY": 1
+    },
+    {
+        "NO": 6,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7026-100",
+        "DESCRIPTION": "SCULPSURE APPLCATR W/ BOX & OVERPACK",
+        "QTY": 1
+    },
+    {
+        "NO": 7,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7026-100",
+        "DESCRIPTION": "SCULPSURE APPLCATR W/ BOX & OVERPACK",
+        "QTY": 1
+    },
+    {
+        "NO": 8,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "S100-7002-030",
+        "DESCRIPTION": "CAPACITOR BANK, CYNERGY",
+        "QTY": 1
+    },
+    {
+        "NO": 9,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "S100-7002-030",
+        "DESCRIPTION": "CAPACITOR BANK, CYNERGY",
+        "QTY": 1
+    },
+    {
+        "NO": 10,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "S100-7002-030",
+        "DESCRIPTION": "CAPACITOR BANK, CYNERGY",
+        "QTY": 1
+    },
+    {
+        "NO": 11,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "710-0138-110",
+        "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
+        "QTY": 1
+    },
+    {
+        "NO": 12,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "710-0138-110",
+        "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
+        "QTY": 1
+    },
+    {
+        "NO": 13,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "710-0138-110",
+        "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
+        "QTY": 1
+    },
+    {
+        "NO": 14,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "710-0138-110",
+        "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE",
+        "QTY": 1
+    },
+    {
+        "NO": 15,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "105-9050",
+        "DESCRIPTION": "MIRROR 1\" TRIPLE PEAK, ROHS",
+        "QTY": 14
+    },
+    {
+        "NO": 16,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "S100-7009-090",
+        "DESCRIPTION": "CAPASITOR BANK, ELITE",
+        "QTY": 1
+    },
+    {
+    "NO": 17,
+    "PRINCIPAL": "CYNOSURE",
+    "PART NUMBER": "100-7017-016",
+    "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
+    "QTY": 1,
+    "Qty_Buyback": 1,
+    "Status": "Sudah",
+    "Tanggal_Buyback": datetime.date(2025, 9, 4),  # update ke tanggal hari ini
+    "Catatan": "Untuk Bamed Clinic Menteng"
+    },
+    {
+        "NO": 18,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7017-016",
+        "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
+        "QTY": 1
+    },
+    {
+        "NO": 19,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7017-016",
+        "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
+        "QTY": 1
+    },
+    {
+        "NO": 20,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-052",
+        "DESCRIPTION": "HANDPIECE 10 MM",
+        "QTY": 2
+    },
+    {
+        "NO": 21,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "809-5000-033",
+        "DESCRIPTION": "EYEWEAR, ALEX 755NM, ND:YAG (1064NM, RB) (OPERATOR)",
+        "QTY": 4
+    },
+    {
+        "NO": 22,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "312-9005",
+        "DESCRIPTION": "EYEWEAR 532/1064NM OD7+ CEW NO LATEXROHS (MEDLITE/REVLITE)",
+        "QTY": 4
+    },
+    {
+        "NO": 23,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-064",
+        "DESCRIPTION": "SPACER ZOOM HANDPIECE",
+        "QTY": 7
+    },
+    {
+        "NO": 24,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "710-0172-200",
+        "DESCRIPTION": "ASSY PCB,  CAP BANK",
+        "QTY": 1
+    },
+    {
+        "NO": 25,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-053",
+        "DESCRIPTION": "HANDPIECE 8 MM",
+        "QTY": 1
+    },
+    {
+        "NO": 26,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1854-005",
+        "DESCRIPTION": "LENS, PL/CX, 18X45FL, 585, 755, 1064, ROHS",
+        "QTY": 10
+    },
+    {
+        "NO": 27,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1575-005",
+        "DESCRIPTION": "LENS, PL/CX, 15X75FL, 585, 755, 1064, ROHS",
+        "QTY": 10
+    },
+    {
+        "NO": 28,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7002-390",
+        "DESCRIPTION": "BEAM COMBINER BEAM BLOCK",
+        "QTY": 4
+    },
+    {
+        "NO": 29,
+    "PRINCIPAL": "CYNOSURE",
+    "PART NUMBER": "809-5000-000",
+    "DESCRIPTION": "PATIENT EYESHIELD, RB",
+    "QTY": 5,
+    "Qty_Buyback": 1,
+    "Status": "Sudah",
+    "Tanggal_Buyback": datetime.date(2025, 3, 6),
+    "Catatan": "Untuk Erha Clinic Samarinda"
+    },
+    {
+        "NO": 30,
+    "PRINCIPAL": "CYNOSURE",
+    "PART NUMBER": "100-7017-069",
+    "DESCRIPTION": "HDT PROTECTIVE WNDW ADJ HNDPC 7.5\"",
+    "QTY": 4,
+    "Qty_Buyback": 2,
+    "Status": "Sudah",
+    "Tanggal_Buyback": datetime.date(2025, 3, 6),
+    "Catatan": "Untuk team PM"
+    },
+    {
+        "NO": 31,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1836-005",
+        "DESCRIPTION": "LENS, PL/CX, 18X36FL, 585, 755, 1064, ROHS",
+        "QTY": 9
+    },
+    {
+        "NO": 32,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "102-0189",
+        "DESCRIPTION": "LENS,  +60MM X 20MM DIA, ROHS 2 (HF I)",
+        "QTY": 5
+    },
+    {
+        "NO": 33,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "656-0305",
+        "DESCRIPTION": "WASH BOTTLE 1L",
+        "QTY": 3
+    },
+    {
+        "NO": 34,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1224-005",
+        "DESCRIPTION": "LENS, PL/CX, 12X24FL, 585, 755, 1064, ROHS",
+        "QTY": 8
+    },
+    {
+        "NO": 35,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1248-005",
+        "DESCRIPTION": "LENS, PL/CX, 12X48FL, 585, 755, 1064, ROHS",
+        "QTY": 8
+    },
+    {
+        "NO": 36,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "312-9100",
+        "DESCRIPTION": "FILTER, WATER, ROHS",
+        "QTY": 7
+    },
+    {
+        "NO": 37,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "805-1530-005",
+        "DESCRIPTION": "LENS, PL/CX, 15X30FL, 585, 755, 1064, ROHS",
+        "QTY": 9
+    },
+    {
+        "NO": 38,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-056",
+        "DESCRIPTION": "SPACER FIXED HANDPIECE",
+        "QTY": 2
+    },
+    {
+        "NO": 39,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "990-8006-200",
+        "DESCRIPTION": "FLASHLAMP, LIN, 6\"ARC, 7X9MM, 200T (PDL)",
+        "QTY": 1
+    },
+    {
+        "NO": 40,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "990-8006-200",
+        "DESCRIPTION": "FLASHLAMP, LIN, 6\"ARC, 7X9MM, 200T (PDL)",
+        "QTY": 1
+    },
+    {
+        "NO": 41,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 42,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 43,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 44,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "429-0207-9",
+        "DESCRIPTION": "ASSY LASER FOOTSWITCH ROHS",
+        "QTY": 1
+    },
+    {
+        "NO": 45,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "313-0099",
+        "DESCRIPTION": "DI FILTER, ARROWHD #CAPSULE, ROHS",
+        "QTY": 13
+    },
+    {
+        "NO": 46,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "130-7002-089",
+        "DESCRIPTION": "SHUTTER MOUNT, BEAM BLOCK, CYNERGY",
+        "QTY": 5
+    },
+    {
+        "NO": 47,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7026-061",
+        "DESCRIPTION": "ASSY, LUX LOTION KIT, SINGLE",
+        "QTY": 3
+    },
+    {
+        "NO": 48,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "130-7002-093",
+        "DESCRIPTION": "SHUTTER, BEAM BLOCK, CYNERGY, ROHS",
+        "QTY": 5
+    },
+    {
+        "NO": 49,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-1754-150",
+        "DESCRIPTION": "HANDPIECE 15MM",
+        "QTY": 7
+    },
+    {
+        "NO": 50,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-1757-070",
+        "DESCRIPTION": "HANDPIECE 7MM",
+        "QTY": 1
+    },
+    {
+        "NO": 51,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-040",
+        "DESCRIPTION": "ASSY, OPTICAL MOUNT, PICOSURE, HMR",
+        "QTY": 3
+    },
+    {
+        "NO": 52,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-105",
+        "DESCRIPTION": "ASSY, OPTICAL MOUNT, PICOSURE, PCMR",
+        "QTY": 3
+    },
+    {
+        "NO": 53,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-532",
+        "DESCRIPTION": "PICOSURE 532DS",
+        "QTY": 1
+    },
+    {
+        "NO": 54,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "100-7012-532",
+        "DESCRIPTION": "PICOSURE 532DS",
+        "QTY": 1
+    },
+    {
+        "NO": 55,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "130-7051-190",
+        "DESCRIPTION": "TRAY, REMOVABLE, TOP CVR, PICO300",
+        "QTY": 7
+    },
+    {
+        "NO": 56,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "656-1000",
+        "DESCRIPTION": "HANDPIECE RL SI",
+        "QTY": 1
+    },
+    {
+        "NO": 57,
+        "PRINCIPAL": "CYNOSURE",
+        "PART NUMBER": "661-0069",
+        "DESCRIPTION": "HANDPIECE ADAPTER RL SI",
+        "QTY": 1
+    },
+    {
+        "NO": 58,
+        "PRINCIPAL": "NEWPONG",
+        "PART NUMBER": "CAT NP100-0004",
+        "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
+        "QTY": 1
+    },
+    {
+        "NO": 59,
+        "PRINCIPAL": "NEWPONG",
+        "PART NUMBER": "CAT NP100-0004",
+        "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
+        "QTY": 1
+    },
+    {
+        "NO": 60,
+        "PRINCIPAL": "NEWPONG",
+        "PART NUMBER": "CAT NP100-0004",
+        "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
+        "QTY": 1
+    },
+    {
+        "NO": 61,
+        "PRINCIPAL": "NEWPONG",
+        "PART NUMBER": "CAT NP100-0004",
+        "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
+        "QTY": 1
+    },
+    {
+        "NO": 62,
+        "PRINCIPAL": "NEWPONG",
+        "PART NUMBER": "CAT NP100-0004",
+        "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
+        "QTY": 1
+    },
+    {
+        "NO": 63,
+        "PRINCIPAL": "NEWPONG",
+        "PART NUMBER": "CAT NP100-0004",
+        "DESCRIPTION": "CARTRIDGE S7, 2.0 MM DEPTH/7.0 MHZ/SINGLE SPOT",
+        "QTY": 1
+    }
 ]
 
 def load_data() -> pd.DataFrame:
@@ -261,12 +567,7 @@ def write_excel_to_bytes(df: pd.DataFrame) -> bytes:
 df = load_data()
 
 # ---------- Header ----------
-st.markdown(
-    '<div class="gradient-bg">'
-    '<h1>🔄 IDSMED - Mediva</h1>'
-    '<h2>IDSMED–Mediva Spare Parts Buyback Tracking System</h2>'
-    '<p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p>'
-    '</div>', unsafe_allow_html=True)
+st.markdown('<div class="gradient-bg"><h1>🔄 IDSMED - Mediva</h1><h2>IDSMED–Mediva Spare Parts Buyback Tracking System</h2><p>Lokasi: Logos - Managed by Akmaludin Agustian for Heru Utomo</p></div>', unsafe_allow_html=True)
 
 # ---------- Summary KPI ----------
 total_qty = int(df["QTY"].sum())  # total unit awal, integer
@@ -287,7 +588,7 @@ st.divider()
 
 # ---------- Sidebar Filters ----------
 with st.sidebar:
-    st.markdown('<div class="sidebar-content"><h3>Filter & Aksi</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-content"><h3 style="color: #667eea;">Filter & Aksi</h3>', unsafe_allow_html=True)
     status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah"], index=0)
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
     st.caption("Pencarian diterapkan ke semua kolom teks.")
@@ -297,9 +598,9 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Tip: Klik header kolom untuk sort / filter tambahan.")
     st.markdown('</div>', unsafe_allow_html=True)
+with st.sidebar:
     show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
     show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
-
 # ---------- Apply Filters ----------
 view = filtered_df(df, status_opt, search)
 if show_complete:
@@ -378,7 +679,11 @@ if validation_passed:
 # ---------- Download ----------
 st.markdown("### 💾 Download Data")
 bytes_xlsx = write_excel_to_bytes(df)
-st.download_button(
-    "⬇️ Download Excel yang sudah diupdate",
-    data=bytes_xlsx,
-    file_name
+st.download_button("⬇️ Download Excel yang sudah diupdate", data=bytes_xlsx,
+                   file_name=f"Data Buyback Mediva - updated {DATE_TODAY}.xlsx",
+                   mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                   use_container_width=True)
+st.caption("Gunakan tombol download untuk menyimpan perubahan permanen.")
+
+# ---------- Footer ----------
+st.markdown("<hr><div style='text-align:center;'><p>© 2025 IDSMED - Mediva Buyback Tracking System</p></div>", unsafe_allow_html=True)
