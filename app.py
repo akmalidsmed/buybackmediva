@@ -716,7 +716,6 @@ if validation_passed:
         df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
         df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
         df = update_status(df)  # update status otomatis di df utama
-        st.markdown('<div class="success-msg">✅ Data berhasil diperbarui!</div>', unsafe_allow_html=True)
 
 # ---------- Download ----------
 st.markdown("### 💾 Download Data")
