@@ -185,11 +185,15 @@ INITIAL_DATA = [
         "QTY": 1
     },
     {
-        "NO": 17,
-        "PRINCIPAL": "CYNOSURE",
-        "PART NUMBER": "100-7017-016",
-        "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
-        "QTY": 1
+    "NO": 17,
+    "PRINCIPAL": "CYNOSURE",
+    "PART NUMBER": "100-7017-016",
+    "DESCRIPTION": "ASSY, SHG, REVLITE/MEDLITE",
+    "QTY": 1,
+    "Qty_Buyback": 1,
+    "Status": "Sudah",
+    "Tanggal_Buyback": datetime.date(2025, 9, 4),  # update ke tanggal hari ini
+    "Catatan": "Untuk PO di Bamed Clinic Menteng"
     },
     {
         "NO": 18,
