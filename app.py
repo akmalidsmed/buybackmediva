@@ -608,7 +608,7 @@ total_sisa_qty = total_qty - total_qty_buyback  # hitung sisa qty total secara l
 total_item = len(df)  # jumlah baris item
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.markdown(f'<div class="metric-card metric-red"><h3>{total_item}</h3><p>Total Item</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card metric-red"><h3>{total_item}</h3><p>Total Line</p></div>', unsafe_allow_html=True)
 with col2:
     st.markdown(f'<div class="metric-card metric-blue"><h3>{total_qty}</h3><p>Total Qty</p></div>', unsafe_allow_html=True)
 with col3:
