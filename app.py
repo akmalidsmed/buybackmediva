@@ -546,7 +546,7 @@ def load_data() -> pd.DataFrame:
 
 def filtered_df(df: pd.DataFrame, status_opt: str, search: str) -> pd.DataFrame:
     out = df.copy()
-    if status_opt in ("Belum", "Sudah"):
+    if status_opt in ("Belum", "Sudah sebagian", "Sudah"):
         out = out[out["Status"] == status_opt]
     if search:
         mask = pd.Series(False, index=out.index)
@@ -577,6 +577,25 @@ def update_status(df: pd.DataFrame) -> pd.DataFrame:
     choices = ["Belum", "Sudah sebagian", "Sudah"]
     df["Status"] = pd.Categorical(np.select(conditions, choices, default="Belum"), categories=choices, ordered=True)
     return df
+
+def load_data() -> pd.DataFrame:
+    df = pd.DataFrame(INITIAL_DATA)
+    if "Status" not in df.columns:
+        df["Status"] = "Belum"
+    if "Tanggal_Buyback" not in df.columns:
+        df["Tanggal_Buyback"] = pd.NaT
+    if "Catatan" not in df.columns:
+        df["Catatan"] = ""
+    if "Qty_Buyback" not in df.columns:
+        df["Qty_Buyback"] = 0
+    df["Tanggal_Buyback"] = pd.to_datetime(df["Tanggal_Buyback"], errors="coerce").dt.date
+    df = df.reset_index(drop=True)
+    df.insert(0, "_ROW_ID", range(1, len(df)+1))
+    df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
+    df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
+    df = update_status(df)  # update status otomatis
+    return df
+
 df = load_data()
 
 # ---------- Header ----------
@@ -601,25 +620,26 @@ st.divider()
 
 # ---------- Sidebar Filters ----------
 with st.sidebar:
-    st.markdown('<div class="sidebar-content"><h3 style="color: #667eea;">Filter & Aksi</h3>', unsafe_allow_html=True)
-    status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah"], index=0)
+    st.markdown('<div class="sidebar-content"><h3 style="color: #667eea;">Filter</h3>', unsafe_allow_html=True)
+    status_opt = st.selectbox("Status", ["Semua", "Belum", "Sudah sebagian", "Sudah"], index=0)
     search = st.text_input("Cari (bebas: nama/serial/kode)", "")
-    st.caption("Pencarian diterapkan ke semua kolom teks.")
     st.markdown("---")
-    st.write("**Kolom yang bisa diedit:** Status, Tanggal Buyback, Catatan, Qty Buyback")
-    st.write("**Kolom otomatis:** Sisa Qty (QTY - Qty Buyback)")
-    st.markdown("---")
-    st.caption("Tip: Klik header kolom untuk sort / filter tambahan.")
     st.markdown('</div>', unsafe_allow_html=True)
+
 with st.sidebar:
-    show_complete = st.checkbox("Tampilkan hanya yang belum selesai (Qty > 0)", value=False)
-    show_zero_sisa = st.checkbox("Tampilkan hanya yang sudah habis (Qty = 0)", value=False)
+    filter_status = st.radio(
+        "Filter berdasarkan status buyback:",
+        options=["Semua", "Tampilkan yang sudah dibuyback", "Tampilkan yang sudah dibuyback sebagian", "Tampilkan yang belum dibuyback"],
+        index=0
+    )
 # ---------- Apply Filters ----------
 view = filtered_df(df, status_opt, search)
-if show_complete:
-    view = view[view["Sisa_Qty"] > 0]
-elif show_zero_sisa:
-    view = view[view["Sisa_Qty"] == 0]
+if filter_status == "Tampilkan yang sudah dibuyback":
+    view = view[view["Status"] == "Sudah"]
+elif filter_status == "Tampilkan yang sudah dibuyback sebagian":
+    view = view[view["Status"] == "Sudah sebagian"]
+elif filter_status == "Tampilkan yang belum dibuyback":
+    view = view[view["Status"] == "Belum"]
 
 # ---------- Editable Columns ----------
 editable_cols = [c for c in ["Status", "Tanggal_Buyback", "Catatan", "Qty_Buyback"] if c in view.columns]
@@ -680,6 +700,7 @@ if not invalid_rows.empty:
 if validation_passed:
     edited["Sisa_Qty"] = edited["QTY"] - edited["Qty_Buyback"]
     edited.loc[edited["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
+    edited = update_status(edited)  # update status otomatis setelah edit
     if not edited.equals(view):
         base = df.set_index("_ROW_ID")
         upd = edited.set_index("_ROW_ID")
@@ -687,6 +708,7 @@ if validation_passed:
         df = base.reset_index()
         df["Sisa_Qty"] = df["QTY"] - df["Qty_Buyback"]
         df.loc[df["Sisa_Qty"] < 0, "Sisa_Qty"] = 0
+        df = update_status(df)  # update status otomatis di df utama
         st.markdown('<div class="success-msg">✅ Data berhasil diperbarui!</div>', unsafe_allow_html=True)
 
 # ---------- Download ----------
