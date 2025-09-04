@@ -378,5 +378,7 @@ if validation_passed:
 # ---------- Download ----------
 st.markdown("### 💾 Download Data")
 bytes_xlsx = write_excel_to_bytes(df)
-st.download_button("⬇️ Download Excel yang sudah diupdate", data=bytes_xlsx,
-                   file_name=f"Data Buy
+st.download_button(
+    "⬇️ Download Excel yang sudah diupdate",
+    data=bytes_xlsx,
+    file_name
