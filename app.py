@@ -1,8 +1,8 @@
-
 import io
 import datetime
 import pandas as pd
 import streamlit as st
+import numpy as np  # import numpy untuk np.select
 
 st.set_page_config(page_title="IDSMED - Mediva Buyback Tracker", page_icon="🔄", layout="wide")
 
@@ -433,6 +433,7 @@ INITIAL_DATA = [
         "PART NUMBER": "100-1757-070",
         "DESCRIPTION": "HANDPIECE 7MM",
         "QTY": 1
+    },
     },
     {
         "NO": 51,
