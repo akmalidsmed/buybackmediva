@@ -134,10 +134,10 @@ INITIAL_DATA = [
     {
         "NO": 29, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "809-5000-000",
         "DESCRIPTION": "PATIENT EYESHIELD, RB", "QTY": 5,
-        "Qty_Buyback": 2,  # +1 untuk Arayu Clinic Makassar (total 2)
+        "Qty_Buyback": 3,  # +2 untuk Arayu Clinic Makassar (total 2)
         "Status": "Sudah sebagian",
         "Tanggal_Buyback": datetime.date(2025, 11, 19),
-        "Catatan": "Untuk Erha Clinic Samarinda; Arayu Clinic Makassar"
+        "Catatan": "Untuk Erha Clinic Samarinda (6 Maret 2025); Arayu Clinic Makassar (19 November 2025)"
     },
     {
         "NO": 30, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "100-7017-069",
