@@ -8,18 +8,18 @@ import streamlit as st
 st.set_page_config(page_title="IDSMED - Mediva Buyback Tracker", page_icon="🔄", layout="wide")
 DATE_TODAY = datetime.date.today()
 
-# ================== Global Styles ==================
+# ================== Global Styles (IDsMED Blue) ==================
 st.markdown("""
 <style>
 /* Base */
 html, body, [data-testid="stAppViewContainer"] {
-    background: #f6f8fc;
+    background: #f5f8ff; /* very light blue */
     font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* Header card */
+/* Header (IDsMED blue gradient) */
 .hero {
-    background: linear-gradient(135deg, #6ea8fe 0%, #b197fc 100%);
+    background: linear-gradient(135deg, #005AA9 0%, #1E88E5 100%);
     color: white;
     padding: 26px 28px;
     border-radius: 18px;
@@ -33,27 +33,27 @@ html, body, [data-testid="stAppViewContainer"] {
     border-radius: 14px;
     padding: 16px 18px;
     box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-    border: 1px solid #eef1f6;
+    border: 1px solid #e7f0ff; /* blue-ish border */
 }
-.metric-title { color: #6b7280; font-size: 13px; margin: 0 0 6px 0; }
-.metric-value { color: #111827; font-weight: 700; font-size: 24px; margin: 0; }
+.metric-title { color: #5b6b7f; font-size: 13px; margin: 0 0 6px 0; }
+.metric-value { color: #0f172a; font-weight: 700; font-size: 24px; margin: 0; }
 
-/* Progress bar */
+/* Progress bar - blue */
 .progress {
     width: 100%;
     height: 12px;
-    background: #eef2ff;
+    background: #eaf2ff;
     border-radius: 999px;
     overflow: hidden;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #d8e7ff;
 }
 .progress > span {
     display: block;
     height: 100%;
-    background: linear-gradient(90deg, #22c55e, #16a34a);
+    background: linear-gradient(90deg, #38BDF8, #1E40AF);
 }
 
-/* Chips legend */
+/* Chips */
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
     display: inline-block;
@@ -62,16 +62,35 @@ html, body, [data-testid="stAppViewContainer"] {
     border-radius: 999px;
     border: 1px solid transparent;
 }
-.chip-gray { background: #f3f4f6; color: #374151; border-color: #e5e7eb; }
-.chip-yellow { background: #fff7ed; color: #92400e; border-color: #fed7aa; }
-.chip-green { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+.chip-gray  { background: #f3f4f6; color: #374151; border-color: #e5e7eb; }           /* Belum */
+.chip-cyan  { background: #ecfeff; color: #0e7490; border-color: #a5f3fc; }           /* Sudah sebagian */
+.chip-blue  { background: #e6f2ff; color: #0b5cab; border-color: #b5daff; }           /* Sudah */
 
 /* Sidebar */
 .sidebar-box {
-    background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
-    border: 1px solid #e6efff;
+    background: linear-gradient(180deg, #f7fbff 0%, #eef6ff 100%);
+    border: 1px solid #e0eeff;
     border-radius: 14px;
     padding: 14px;
+}
+
+/* Buttons (primary) */
+.stButton > button, .stDownloadButton > button {
+    background-color: #1E88E5 !important;
+    color: #ffffff !important;
+    border: 1px solid #1E88E5 !important;
+    border-radius: 10px !important;
+    padding: 0.6rem 1rem !important;
+}
+.stButton > button:hover, .stDownloadButton > button:hover {
+    background-color: #1565C0 !important;
+    border-color: #1565C0 !important;
+}
+
+/* Inputs focus */
+input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(30,136,229,0.25) !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -200,7 +219,7 @@ def build_progress_html(pct: float) -> str:
     pct_txt = f"{int(pct*100)}%"
     return f'''
     <div class="progress"><span style="width:{pct*100:.2f}%"></span></div>
-    <div style="font-size:12px;color:#6b7280;margin-top:6px;">Progress Buyback: <b>{pct_txt}</b></div>
+    <div style="font-size:12px;color:#5b6b7f;margin-top:6px;">Progress Buyback: <b>{pct_txt}</b></div>
     '''
 
 # ================== Data ==================
@@ -237,12 +256,12 @@ with m4:
 
 st.markdown(build_progress_html(progress), unsafe_allow_html=True)
 
-# Legend chips
+# Legend chips (biru)
 st.markdown("""
 <div class="chips" style="margin: 6px 0 2px 0;">
   <span class="chip chip-gray">Belum</span>
-  <span class="chip chip-yellow">Sudah sebagian</span>
-  <span class="chip chip-green">Sudah</span>
+  <span class="chip chip-cyan">Sudah sebagian</span>
+  <span class="chip chip-blue">Sudah</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -301,7 +320,6 @@ if sort_by == "Sisa Qty ↓":
 elif sort_by == "Buyback Qty ↓":
     view = view.sort_values(["Qty_Buyback", "QTY"], ascending=[False, False])
 elif sort_by == "Tanggal Buyback ↓":
-    # None/NaT di bawah
     view = view.sort_values("Tanggal_Buyback", ascending=False, na_position="last")
 elif sort_by == "Principal + Part Number":
     view = view.sort_values(["PRINCIPAL", "PART NUMBER"], ascending=[True, True])
@@ -341,7 +359,6 @@ with tab1:
         elif col == "Tanggal_Buyback":
             cfg[col] = st.column_config.DateColumn("Tanggal Buyback", format="YYYY-MM-DD", disabled=disabled)
         else:
-            # TextColumn untuk PR, PART NUMBER, DESCRIPTION, Status, Catatan
             label = col
             if col == "PART NUMBER": label = "Part Number"
             if col == "DESCRIPTION": label = "Description"
@@ -391,7 +408,7 @@ with tab2:
         subset = df[df["Status"].astype(str) == stt]
         cnt = len(subset)
         sisa = int(subset["Sisa_Qty"].sum()) if not subset.empty else 0
-        chip_cls = "chip-gray" if stt == "Belum" else ("chip-yellow" if stt == "Sudah sebagian" else "chip-green")
+        chip_cls = "chip-gray" if stt == "Belum" else ("chip-cyan" if stt == "Sudah sebagian" else "chip-blue")
         with cols[i]:
             st.markdown(
                 f'<div class="metric-card">'
@@ -426,4 +443,4 @@ st.download_button(
     use_container_width=True
 )
 
-st.markdown("<hr><div style='text-align:center;color:#6b7280;'>© 2025 IDSMED - Mediva Buyback Tracking System</div>", unsafe_allow_html=True)
+st.markdown("<hr><div style='text-align:center;color:#5b6b7f;'>© 2025 IDSMED - Mediva Buyback Tracking System</div>", unsafe_allow_html=True)
