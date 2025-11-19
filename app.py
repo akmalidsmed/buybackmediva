@@ -278,10 +278,10 @@ INITIAL_DATA = [
     "PART NUMBER": "809-5000-000",
     "DESCRIPTION": "PATIENT EYESHIELD, RB",
     "QTY": 5,
-    "Qty_Buyback": 1,
-    "Status": "Sudah",
-    "Tanggal_Buyback": datetime.date(2025, 3, 6),
-    "Catatan": "Untuk Erha Clinic Samarinda"
+    "Qty_Buyback": 2,  # updated: +1 untuk Arayu Clinic Makassar
+    "Status": "Sudah sebagian",
+    "Tanggal_Buyback": datetime.date(2025, 11, 19),
+    "Catatan": "Untuk Erha Clinic Samarinda; Arayu Clinic Makassar"
     },
     {
         "NO": 30,
