@@ -92,6 +92,17 @@ input:focus, textarea:focus, select:focus {
     outline: none !important;
     box-shadow: 0 0 0 3px rgba(30,136,229,0.25) !important;
 }
+
+/* Detail card */
+.detail-card {
+    background: #ffffff;
+    border: 1px solid #e7f0ff;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.detail-title { font-weight: 700; color: #0b5cab; margin-bottom: 4px; }
+.detail-sub { color: #5b6b7f; font-size: 12px; margin-bottom: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -134,10 +145,16 @@ INITIAL_DATA = [
     {
         "NO": 29, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "809-5000-000",
         "DESCRIPTION": "PATIENT EYESHIELD, RB", "QTY": 5,
-        "Qty_Buyback": 2,  # +1 untuk Arayu Clinic Makassar (total 2)
+        "Qty_Buyback": 3,  # total sudah dibuyback 3 pcs
         "Status": "Sudah sebagian",
-        "Tanggal_Buyback": datetime.date(2025, 11, 19),
-        "Catatan": "Untuk Erha Clinic Samarinda; Arayu Clinic Makassar"
+        "Tanggal_Buyback": DATE_TODAY,  # transaksi terakhir (Arayu) = hari ini
+        "Catatan": "Riwayat: 1 pc Erha (2025-03-06), 1 pc Arayu (hari ini), 1 pc (detail menyusul)",
+        # Riwayat per transaksi untuk tampilan detail & ekspor History
+        "Buyback_History": [
+            {"Tanggal": datetime.date(2025, 3, 6), "Qty": 1, "Ke": "Erha Clinic Samarinda", "Catatan": ""},
+            {"Tanggal": DATE_TODAY, "Qty": 1, "Ke": "Arayu Clinic Makassar", "Catatan": ""},
+            # 1 pc tambahan sudah tercatat di Qty_Buyback namun detail menyusul
+        ]
     },
     {
         "NO": 30, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "100-7017-069",
@@ -181,11 +198,24 @@ INITIAL_DATA = [
 ]
 
 # ================== Helpers ==================
+def ensure_history_list(x):
+    # pastikan Buyback_History adalah list of dict
+    if isinstance(x, list):
+        return x
+    return []
+
 def update_status(df: pd.DataFrame) -> pd.DataFrame:
-    # Sisa Qty
     df["Qty_Buyback"] = df.get("Qty_Buyback", 0).fillna(0).astype(int)
+    # Ambil tanggal terakhir dari history kalau ada
+    if "Buyback_History" in df.columns:
+        last_dates = []
+        for _, r in df.iterrows():
+            hist = ensure_history_list(r.get("Buyback_History"))
+            dates = [h.get("Tanggal") for h in hist if h.get("Tanggal") is not None]
+            last_dates.append(max(dates) if dates else r.get("Tanggal_Buyback"))
+        df["Tanggal_Buyback"] = last_dates
+    df["Tanggal_Buyback"] = pd.to_datetime(df["Tanggal_Buyback"], errors="coerce").dt.date
     df["Sisa_Qty"] = (df["QTY"] - df["Qty_Buyback"]).clip(lower=0).astype(int)
-    # Status otomatis
     conditions = [
         (df["Qty_Buyback"] == 0),
         (df["Qty_Buyback"] > 0) & (df["Sisa_Qty"] > 0),
@@ -198,21 +228,13 @@ def update_status(df: pd.DataFrame) -> pd.DataFrame:
 
 def load_data() -> pd.DataFrame:
     df = pd.DataFrame(INITIAL_DATA)
-    for col, default in [("Status", "Belum"), ("Tanggal_Buyback", pd.NaT), ("Catatan", ""), ("Qty_Buyback", 0)]:
+    for col, default in [("Status", "Belum"), ("Tanggal_Buyback", pd.NaT), ("Catatan", ""), ("Qty_Buyback", 0), ("Buyback_History", None)]:
         if col not in df.columns: df[col] = default
     df["Tanggal_Buyback"] = pd.to_datetime(df["Tanggal_Buyback"], errors="coerce").dt.date
     df = df.reset_index(drop=True)
     df.insert(0, "_ROW_ID", range(1, len(df)+1))
     df = update_status(df)
     return df
-
-def write_excel_to_bytes(df: pd.DataFrame) -> bytes:
-    buf = io.BytesIO()
-    with pd.ExcelWriter(buf, engine="openpyxl") as writer:
-        export_df = df.drop(columns=["_ROW_ID"], errors="ignore")
-        export_df.to_excel(writer, index=False, sheet_name="Sheet1")
-    buf.seek(0)
-    return buf.read()
 
 def build_progress_html(pct: float) -> str:
     pct = max(0.0, min(pct, 1.0))
@@ -221,6 +243,53 @@ def build_progress_html(pct: float) -> str:
     <div class="progress"><span style="width:{pct*100:.2f}%"></span></div>
     <div style="font-size:12px;color:#5b6b7f;margin-top:6px;">Progress Buyback: <b>{pct_txt}</b></div>
     '''
+
+def flatten_history(df: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for _, r in df.iterrows():
+        hist = ensure_history_list(r.get("Buyback_History"))
+        known_sum = 0
+        for h in hist:
+            rows.append({
+                "NO": r["NO"],
+                "PRINCIPAL": r["PRINCIPAL"],
+                "PART NUMBER": r["PART NUMBER"],
+                "DESCRIPTION": r["DESCRIPTION"],
+                "Tanggal": h.get("Tanggal"),
+                "Qty": h.get("Qty", 0),
+                "Ke": h.get("Ke", ""),
+                "Catatan": h.get("Catatan", ""),
+            })
+            known_sum += h.get("Qty", 0) or 0
+        # Jika Qty_Buyback > total dari history, tampilkan baris placeholder agar konsisten dibaca
+        diff = int(r.get("Qty_Buyback", 0)) - known_sum
+        if diff > 0:
+            rows.append({
+                "NO": r["NO"],
+                "PRINCIPAL": r["PRINCIPAL"],
+                "PART NUMBER": r["PART NUMBER"],
+                "DESCRIPTION": r["DESCRIPTION"],
+                "Tanggal": r.get("Tanggal_Buyback"),
+                "Qty": diff,
+                "Ke": "Belum ditentukan (detail menyusul)",
+                "Catatan": "",
+            })
+    out = pd.DataFrame(rows) if rows else pd.DataFrame(columns=["NO","PRINCIPAL","PART NUMBER","DESCRIPTION","Tanggal","Qty","Ke","Catatan"])
+    if not out.empty:
+        out["Tanggal"] = pd.to_datetime(out["Tanggal"], errors="coerce").dt.date
+        out = out.sort_values(["NO", "Tanggal"], ascending=[True, True], na_position="last")
+    return out
+
+def write_excel_to_bytes(df: pd.DataFrame) -> bytes:
+    buf = io.BytesIO()
+    hist = flatten_history(df)
+    with pd.ExcelWriter(buf, engine="openpyxl") as writer:
+        export_df = df.drop(columns=["_ROW_ID"], errors="ignore").copy()
+        export_df.to_excel(writer, index=False, sheet_name="Data")
+        if not hist.empty:
+            hist.to_excel(writer, index=False, sheet_name="History")
+    buf.seek(0)
+    return buf.read()
 
 # ================== Data ==================
 df = load_data()
@@ -332,71 +401,141 @@ tab1, tab2 = st.tabs(["📋 List Data", "📈 Ringkasan"])
 with tab1:
     st.subheader("Data Buyback")
 
-    # Simpan _ROW_ID untuk sinkron update
-    row_ids = view["_ROW_ID"].copy()
+    left, right = st.columns([0.68, 0.32], gap="large")
 
-    # Tampilkan tanpa kolom _ROW_ID
-    view_display = view.drop(columns=["_ROW_ID"], errors="ignore").copy()
+    with left:
+        # Simpan _ROW_ID untuk sinkron update
+        row_ids = view["_ROW_ID"].copy()
 
-    # Kolom editable
-    editable_cols = ["Qty_Buyback", "Tanggal_Buyback", "Catatan"]
+        # Tampilkan tanpa kolom _ROW_ID & Buyback_History
+        view_display = view.drop(columns=["_ROW_ID", "Buyback_History"], errors="ignore").copy()
 
-    # Siapkan column_config (non-editable untuk kolom lain)
-    cfg = {}
-    for col in view_display.columns:
-        disabled = col not in editable_cols
+        # Kolom editable (kita biarkan Qty_Buyback editable, Tanggal & Catatan juga)
+        editable_cols = ["Qty_Buyback", "Tanggal_Buyback", "Catatan"]
 
-        if col in ["QTY", "Qty_Buyback", "Sisa_Qty", "NO"]:
-            cfg[col] = st.column_config.NumberColumn(
-                col if col != "Sisa_Qty" else "Sisa Qty",
-                disabled=disabled,
-                min_value=0,
-                step=1,
-                help=("Jumlah unit tersedia" if col == "QTY" else
-                      "Jumlah sudah dibuyback (maks. = QTY)" if col == "Qty_Buyback" else
-                      "Sisa unit yang belum dibuyback (otomatis)" if col == "Sisa_Qty" else "")
-            )
-        elif col == "Tanggal_Buyback":
-            cfg[col] = st.column_config.DateColumn("Tanggal Buyback", format="YYYY-MM-DD", disabled=disabled)
+        # Konfigurasi kolom
+        cfg = {}
+        for col in view_display.columns:
+            disabled = col not in editable_cols
+            if col in ["QTY", "Qty_Buyback", "Sisa_Qty", "NO"]:
+                cfg[col] = st.column_config.NumberColumn(
+                    col if col != "Sisa_Qty" else "Sisa Qty",
+                    disabled=disabled,
+                    min_value=0,
+                    step=1,
+                    help=("Jumlah unit tersedia" if col == "QTY" else
+                          "Jumlah sudah dibuyback (bisa disesuaikan cepat)" if col == "Qty_Buyback" else
+                          "Sisa unit yang belum dibuyback (otomatis)" if col == "Sisa_Qty" else "")
+                )
+            elif col == "Tanggal_Buyback":
+                cfg[col] = st.column_config.DateColumn("Tanggal Buyback", format="YYYY-MM-DD", disabled=disabled)
+            else:
+                label = col
+                if col == "PART NUMBER": label = "Part Number"
+                if col == "DESCRIPTION": label = "Description"
+                if col == "PRINCIPAL": label = "Principal"
+                cfg[col] = st.column_config.TextColumn(label, disabled=disabled)
+
+        # Render editor
+        edited = st.data_editor(
+            view_display,
+            use_container_width=True,
+            hide_index=True,
+            column_config=cfg,
+            num_rows="fixed",
+            key="editor"
+        )
+
+        # Tambahkan kembali _ROW_ID untuk update
+        edited["_ROW_ID"] = row_ids.values
+
+        # Validasi
+        invalid_rows = edited[edited["Qty_Buyback"] > edited["QTY"]]
+        if not invalid_rows.empty:
+            st.warning("⚠️ Ada baris dengan Qty Buyback melebihi QTY. Mohon koreksi nilainya.", icon="⚠️")
+
+        # Apply Changes (hanya jika valid)
+        if invalid_rows.empty:
+            edited["Qty_Buyback"] = edited["Qty_Buyback"].fillna(0).astype(int)
+            edited["Sisa_Qty"] = (edited["QTY"] - edited["Qty_Buyback"]).clip(lower=0).astype(int)
+            base = df.set_index("_ROW_ID")
+            upd = edited.set_index("_ROW_ID")
+            for c in ["Qty_Buyback", "Tanggal_Buyback", "Catatan"]:
+                if c in upd.columns:
+                    base.loc[upd.index, c] = upd[c]
+            df = base.reset_index()
+            df = update_status(df)
+
+    with right:
+        st.markdown('<div class="detail-card">', unsafe_allow_html=True)
+        st.markdown('<div class="detail-title">Detail & Riwayat</div>', unsafe_allow_html=True)
+        st.markdown('<div class="detail-sub">Pilih item untuk melihat riwayat buyback, tambah transaksi, dan catatan.</div>', unsafe_allow_html=True)
+
+        # Pilihan item untuk detail (default diarahkan ke 809-5000-000 jika ada)
+        view_for_select = df.copy()
+        view_for_select["Select_Label"] = view_for_select.apply(
+            lambda r: f'{r["NO"]}. {r["PART NUMBER"]} — {r["DESCRIPTION"][:38]} (Sisa: {r["Sisa_Qty"]})', axis=1
+        )
+        default_index = 0
+        candidates = view_for_select[view_for_select["PART NUMBER"] == "809-5000-000"]
+        if not candidates.empty:
+            default_index = candidates.index[0]
+        selected_label = st.selectbox(
+            "Pilih item",
+            options=view_for_select["Select_Label"].tolist(),
+            index=default_index if default_index < len(view_for_select) else 0
+        )
+        sel_row = view_for_select[view_for_select["Select_Label"] == selected_label].iloc[0]
+
+        # Ringkas info
+        st.markdown(
+            f"- Part Number: {sel_row['PART NUMBER']}\n"
+            f"- Description: {sel_row['DESCRIPTION']}\n"
+            f"- Qty: {sel_row['QTY']} | Buyback: {sel_row['Qty_Buyback']} | Sisa: {sel_row['Sisa_Qty']}\n"
+            f"- Status: {'✅ Sudah' if str(sel_row['Status'])=='Sudah' else '🟡 Sudah sebagian' if str(sel_row['Status'])=='Sudah sebagian' else '⬜ Belum'}\n"
+            f"- Tgl terakhir: {sel_row['Tanggal_Buyback'] if pd.notna(pd.to_datetime(sel_row['Tanggal_Buyback'], errors='coerce')) else '-'}",
+        )
+
+        # Tampilkan riwayat
+        hist_df_all = flatten_history(df)
+        hist_sel = hist_df_all[hist_df_all["NO"] == sel_row["NO"]]
+        st.markdown(" ")
+        st.markdown("Riwayat Buyback")
+        if hist_sel.empty:
+            st.info("Belum ada riwayat.", icon="ℹ️")
         else:
-            label = col
-            if col == "PART NUMBER": label = "Part Number"
-            if col == "DESCRIPTION": label = "Description"
-            if col == "PRINCIPAL": label = "Principal"
-            cfg[col] = st.column_config.TextColumn(label, disabled=disabled)
+            st.dataframe(hist_sel[["Tanggal","Qty","Ke","Catatan"]], use_container_width=True, hide_index=True)
 
-    # Render editor
-    edited = st.data_editor(
-        view_display,
-        use_container_width=True,
-        hide_index=True,
-        column_config=cfg,
-        num_rows="fixed",
-        key="editor"
-    )
+        # Form tambah transaksi
+        st.markdown("---")
+        st.markdown("Tambah Transaksi Buyback")
+        with st.form(key="add_tx_form", clear_on_submit=True):
+            tgl = st.date_input("Tanggal", value=DATE_TODAY)
+            qty = st.number_input("Qty", min_value=1, step=1, value=1)
+            tujuan = st.text_input("Ke (nama klinik/customer)", value="")
+            cat = st.text_input("Catatan", value="")
+            submit_tx = st.form_submit_button("Tambah")
 
-    # Balikkan _ROW_ID untuk update
-    edited["_ROW_ID"] = row_ids.values
+        if submit_tx:
+            idx = df[df["NO"] == sel_row["NO"]].index[0]
+            hist = ensure_history_list(df.at[idx, "Buyback_History"])
+            # Validasi kapasitas sisa
+            sisa_sekarang = int(df.at[idx, "Sisa_Qty"])
+            if qty > sisa_sekarang:
+                st.warning(f"Qty melebihi sisa stok (Sisa saat ini: {sisa_sekarang}).", icon="⚠️")
+            else:
+                hist.append({"Tanggal": tgl, "Qty": int(qty), "Ke": tujuan.strip(), "Catatan": cat.strip()})
+                df.at[idx, "Buyback_History"] = hist
+                df.at[idx, "Qty_Buyback"] = int(df.at[idx, "Qty_Buyback"]) + int(qty)
+                # Update tanggal terakhir jika lebih baru
+                last_dt = df.at[idx, "Tanggal_Buyback"]
+                if (pd.isna(pd.to_datetime(last_dt, errors="coerce"))) or (tgl and tgl > last_dt):
+                    df.at[idx, "Tanggal_Buyback"] = tgl
+                df = update_status(df)
+                st.success("Transaksi berhasil ditambahkan.", icon="✅")
+                st.rerun()
 
-    # Validasi
-    invalid_rows = edited[edited["Qty_Buyback"] > edited["QTY"]]
-    if not invalid_rows.empty:
-        st.warning("⚠️ Ada baris dengan Qty Buyback melebihi QTY. Mohon koreksi nilainya.", icon="⚠️")
-
-    # Apply Changes (hanya jika valid)
-    if invalid_rows.empty:
-        # Hitung ulang Sisa dan Status untuk edited
-        edited["Qty_Buyback"] = edited["Qty_Buyback"].fillna(0).astype(int)
-        edited["Sisa_Qty"] = (edited["QTY"] - edited["Qty_Buyback"]).clip(lower=0).astype(int)
-        # Update df utama pada kolom editable saja
-        base = df.set_index("_ROW_ID")
-        upd = edited.set_index("_ROW_ID")
-        for c in editable_cols:
-            if c in upd.columns:
-                base.loc[upd.index, c] = upd[c]
-        df = base.reset_index()
-        # Recompute status & sisa setelah update
-        df = update_status(df)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 with tab2:
     st.subheader("Ringkasan")
