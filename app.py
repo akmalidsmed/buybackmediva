@@ -137,7 +137,7 @@ INITIAL_DATA = [
         "Qty_Buyback": 3,  # +2 untuk Arayu Clinic Makassar (total 2)
         "Status": "Sudah sebagian",
         "Tanggal_Buyback": datetime.date(2025, 11, 19),
-        "Catatan": "Untuk Erha Clinic Samarinda (6 Maret 2025); Arayu Clinic Makassar (19 November 2025)"
+        "Catatan": "Untuk Erha Clinic Samarinda 1 Pc (6 Maret 2025); Arayu Clinic Makassar 2 Pcs (19 November 2025)"
     },
     {
         "NO": 30, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "100-7017-069",
