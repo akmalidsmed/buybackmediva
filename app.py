@@ -113,9 +113,9 @@ INITIAL_DATA = [
     {"NO": 14, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "710-0138-110", "DESCRIPTION": "ASSY PCB, ETX COMPUTER INTERFACE", "QTY": 1},
     {
         "NO": 15, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "105-9050", "DESCRIPTION": "MIRROR 1\" TRIPLE PEAK, ROHS", "QTY": 14,
-     "Qty_Buyback": 1, "Status": "Sudah sebagian",
+     "Qty_Buyback": 3, "Status": "Sudah sebagian",
      "Tanggal_Buyback": datetime.date(2025, 11, 27),
-     "Catatan": "Untuk Erha Clinic Cirebon"
+     "Catatan": "Erha Clinic Kombes Surabaya 2 Pc (19 Januari 2026), Untuk Erha Clinic Cirebon 1 Pc (27 November 2025)"
     },
     {"NO": 16, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "S100-7009-090", "DESCRIPTION": "CAPASITOR BANK, ELITE", "QTY": 1},
     {
