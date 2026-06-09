@@ -151,7 +151,12 @@ INITIAL_DATA = [
         "Tanggal_Buyback": datetime.date(2025, 3, 6), "Catatan": "Untuk team PM 2 Pcs (6 Maret 2025), Erha Clinic Kemanggisan Raya 1 Pc (8 Mei 2026), dan Erha Clinic Medan (9 Juni 2026)"
     },
     {"NO": 31, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "805-1836-005", "DESCRIPTION": "LENS, PL/CX, 18X36FL, 585, 755, 1064, ROHS", "QTY": 9},
-    {"NO": 32, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "102-0189", "DESCRIPTION": "LENS,  +60MM X 20MM DIA, ROHS 2 (HF I)", "QTY": 5},
+    {
+        "NO": 32, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "102-0189", 
+        "DESCRIPTION": "LENS,  +60MM X 20MM DIA, ROHS 2 (HF I)", 
+        "QTY": 5, "Qty_Buyback": 1, "Status": "Sudah sebagian",
+        "Tanggal_Buyback": datetime.date(2026, 6, 9), "Catatan": "Erha Clinic Medan (9 Juni 2026)"
+    },
     {"NO": 33, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "656-0305", "DESCRIPTION": "WASH BOTTLE 1L", "QTY": 3},
     {"NO": 34, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "805-1224-005", "DESCRIPTION": "LENS, PL/CX, 12X24FL, 585, 755, 1064, ROHS", "QTY": 8},
     {"NO": 35, "PRINCIPAL": "CYNOSURE", "PART NUMBER": "805-1248-005", "DESCRIPTION": "LENS, PL/CX, 12X48FL, 585, 755, 1064, ROHS", "QTY": 8},
